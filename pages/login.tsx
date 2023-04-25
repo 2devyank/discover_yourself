@@ -1,6 +1,7 @@
 import { Box, Button, TextField } from '@mui/material'
 import React from 'react'
 import styles from "../styles/Register.module.css"
+import Link from 'next/link'
 
 export default function login() {
   return (
@@ -19,12 +20,16 @@ export default function login() {
         <span>Discover your skills , projects and get hired ! It's that simple</span>
      
         <div className={styles.butin}>
-        <Button variant="outlined" href="#outlined-buttons">
-      Sign Up
-    </Button>
-    <Button variant="outlined" href="#outlined-buttons">
-      Log In
-    </Button>
+        <Link href="/register">
+    <Button variant="outlined" >
+  Sign Up
+</Button>
+      </Link>
+  <Link href="/login">
+<Button variant="outlined" >
+  Log In
+</Button>
+  </Link>
         </div>
         <div className={styles.texti}>
     
