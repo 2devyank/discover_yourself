@@ -1,0 +1,74 @@
+.down{
+    display: flex;
+    
+}
+.leftbar{
+    width: 30%;
+    border: 1px red solid;
+    /* padding: 10px 10px; */
+}
+.rightbar{
+    border: 1px solid red;
+    width:70%;
+}
+.inleft{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding:10px 10px ;
+   
+}
+.box{
+    display: flex;
+    flex-direction: column;
+}
+.leftnav{
+    display: flex;
+    gap: 20px;
+    justify-content: baseline;
+    text-decoration: none;
+    color: black;
+}
+.box{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.inbox{
+    display: flex;
+    gap: 20px;
+}
+.single{
+    font-size: 20px;
+}
+.head{
+    font-size: 25px;
+    font-weight: 600;
+}
+.inrightbar{
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.field{
+    width: 50%;
+}
+@media(max-width:800px){
+    .inbox{
+        flex-direction: column;
+    }
+    .field{
+        width: 100%;
+        
+    }
+    .down{
+    display: block;
+}
+    .leftbar{
+    width: 100%;
+}
+.rightbar{
+    width: 100%;
+}
+}
