@@ -1,18 +1,19 @@
 import React from 'react'
 import styles from "../../../styles/Edit.module.css"
-import { Box, Button, TextField } from '@mui/material'
+import { Autocomplete, Box, Button, TextField } from '@mui/material'
 import Link from 'next/link'
 import Image from 'next/image'
 import prof from "../../../public/profile.png"
 import port from "../../../public/portfolio.png"
 import lay from "../../../public/layers.png"
-import { Dayjs } from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-export default function experience() {
-  const [value, setValue] = React.useState<Dayjs | null>(null);
+
+const top100Films = [
+    { title: 'The Shawshank Redemption', year: 1994 },
+    { title: 'The Godfather', year: 1972 },
+    { title: 'The Godfather: Part II', year: 1974 },
+    { title: 'The Dark Knight', year: 2008 }
+]
+export default function profile() {
   return (
     <div>
         <div className={styles.down}>
@@ -64,8 +65,8 @@ export default function experience() {
         </div>
         <div className={styles.rightbar}>
           <div className={styles.inrightbar}>
-            <span className={styles.head}>Project</span>
-            <span>Manage your work experience here</span>
+            <span className={styles.head}>Profile</span>
+            <span>Details you share will be displayed on your profile</span>
             <Box
       component="form"
       className={styles.box}
@@ -77,46 +78,57 @@ export default function experience() {
         className={styles.field}
           required
           id="outlined-required"
-          label="Job Title"
+          label="Name"
           defaultValue=" "
-          placeholder='Enter Job Title'
+          placeholder='Enter Name'
         />
          <TextField
         className={styles.field}
           required
           id="outlined-required"
-          label="Company name"
+          label="Email"
           defaultValue=" "
-          placeholder='Enter Company name'
+          placeholder='Enter Email'
         />
         </div>
         <div className={styles.inbox}>
-        {/* <TextField
+        <TextField
         className={styles.field}
           required
           id="outlined-required"
-          label="Start Date"
+          label="Portfolio"
           defaultValue=" "
-          placeholder='Select Start Date'
+          placeholder='Enter Portfolio URL'
         />
          <TextField
         className={styles.field}
           required
           id="outlined-required"
-          label="End Date"
+          label="Expertise"
           defaultValue=" "
-          placeholder='Select End Date'
-        /> */}
-        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['DatePicker']}>
-        <DatePicker value={value} onChange={(newValue) => setValue(newValue)} />
-      </DemoContainer>
-    </LocalizationProvider> */}
+          placeholder='Enter expertise'
+        />
+       
         </div>
+        <Autocomplete
+        multiple
+        id="tags-outlined"
+        options={top100Films}
+        getOptionLabel={(option) => option.title}
+        defaultValue={[top100Films[0]]}
+        filterSelectedOptions
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Add skills"
+            placeholder="Skills"
+          />
+        )}
+      />
         <TextField
         className={styles.field}
           id="outlined-multiline-static"
-          label="About Your Role"
+          label="About YourSelf"
           multiline
           rows={4}
           defaultValue=" "
