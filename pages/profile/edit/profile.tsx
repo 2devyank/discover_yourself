@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from "../../../styles/Edit.module.css"
 import { Autocomplete, Box, Button, TextField } from '@mui/material'
 import Link from 'next/link'
@@ -6,6 +6,8 @@ import Image from 'next/image'
 import prof from "../../../public/profile.png"
 import port from "../../../public/portfolio.png"
 import lay from "../../../public/layers.png"
+import { useDropzone } from 'react-dropzone'
+import piexif from "piexif-ts"
 
 const top100Films = [
     { title: 'The Shawshank Redemption', year: 1994 },
@@ -14,11 +16,37 @@ const top100Films = [
     { title: 'The Dark Knight', year: 2008 }
 ]
 export default function profile() {
+  
+  
+  
+  const [file,setfile]=useState<File>();
+  const [filert,setfilert]=useState<string>('');
+
+  const convertToBase64=(file:File)=>{
+
+    return new Promise((resolve,reject)=>{
+      const fileReader=new FileReader();
+      fileReader.readAsDataURL(file);
+     
+      fileReader.onload=()=>{
+        resolve(fileReader.result);
+      }
+      fileReader.onerror=(error)=>{
+        reject(error);
+      }
+    })
+  }
+  
+  
+ 
+  
+
   return (
     <div>
         <div className={styles.down}>
         <div className={styles.leftbar}>
             <div className={styles.inleft}>
+
         
              <Link className={styles.leftnav} href="/profile/edit/profile">
          <Image
@@ -73,6 +101,9 @@ export default function profile() {
       noValidate
       autoComplete="off"
     >
+    
+    
+
       <div className={styles.inbox}>
         <TextField
         className={styles.field}

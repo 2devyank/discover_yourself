@@ -5,8 +5,11 @@ import Link from 'next/link'
 import { useLoginTaskMutation } from '@/features/Register'
 import { cookies } from 'next/dist/client/components/headers'
 import Cookies from 'universal-cookie'
+import { useRouter } from 'next/router'
 
 export default function login() {
+  const router=useRouter();
+
   const cookies = new Cookies();
   const [addTask, { isSuccess }] = useLoginTaskMutation();
   // const {status,error,data}=useLoginTaskMutation();
@@ -29,13 +32,15 @@ export default function login() {
     };
     console.log(task);
     const result = await addTask(task).unwrap();
-    cookies.set('token', result.accessToken, { path: "/", httpOnly: true })
+    // cookies.remove('token');
+    localStorage.setItem("token",result.accessToken);
     console.log(result.accessToken);
     console.log(isSuccess);
+router.push("/profile/profile");
     //  console.log(result.status);
     // console.log(data.data.accesToken);
 
-  }
+  } 
   return (
     <section className={styles.sec}>
 

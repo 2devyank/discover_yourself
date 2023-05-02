@@ -1,6 +1,9 @@
+'use client'
 import {createApi,fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 
 
+const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+console.log(token);
 interface output{
   id:number,
   name:string,
@@ -24,16 +27,19 @@ type taks={
   email:string,
   password:string
 }
-export const taskApi=createApi({
-reducerPath:"tasksApi",
+export const authApi=createApi({
+reducerPath:"authsApi",
 baseQuery:fetchBaseQuery({
     baseUrl:"http://localhost:8080/"
 }),
 endpoints:(builder)=>({
-  tasks:builder.query<output[],void>({
-    query:(body)=>"/user"
+  users:builder.query<output,void>({
+    query:()=>({
+      url:"/user",
+      headers:{"Authorization":`Bearer ${token}`}
+    })
   }) ,
-  addTask:builder.mutation({
+  addauth:builder.mutation({
     query:(task)=>({
       url:"/register",
       method:"POST",
@@ -50,4 +56,4 @@ endpoints:(builder)=>({
 })
 })
 
-export const {useTasksQuery,useAddTaskMutation,useLoginTaskMutation} =taskApi;
+export const {useUsersQuery,useLoginTaskMutation,useAddauthMutation} =authApi;

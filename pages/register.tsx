@@ -2,13 +2,15 @@ import { Box, Button, TextField } from '@mui/material'
 import React, { MouseEventHandler, useRef, useState } from 'react'
 import styles from "../styles/Register.module.css";
 import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
-import { taskApi, useAddTaskMutation } from '@/features/Register';
+
 import { Practice } from './components/Practice';
 import Link from 'next/link';
+import { useAddauthMutation } from '@/features/Register';
 
 
 export default function register() {
-  const [addTask,result]=useAddTaskMutation();
+  // const [addTask,result]=useAddTaskMutation();
+  const [Addauth,result]=useAddauthMutation();
   
   const emailref=useRef<HTMLInputElement>(null);
   const passwordref=useRef<HTMLInputElement>(null);
@@ -22,7 +24,7 @@ export default function register() {
 
     };
     console.log(task);
-    await addTask(task);
+    await Addauth(task);
    
   }
   

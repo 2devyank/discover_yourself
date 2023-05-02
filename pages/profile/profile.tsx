@@ -15,6 +15,7 @@ import Paper from '@mui/material/Paper';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import AddIcon from '@mui/icons-material/Add';
 import TodayIcon from '@mui/icons-material/Today';
+import { useUsersQuery } from '@/features/Register';
 
 export default function profile() {
   interface ChipData {
@@ -36,7 +37,10 @@ export default function profile() {
     { key: 4, label: 'Vue.js' },
   ]);
 
-
+const {data,error,isSuccess}=useUsersQuery();
+// console.log(error);
+console.log(data);
+console.log(data?.email);
   return (
     <div className={styles.prof}>
       <div className={styles.leftprofile}>
@@ -79,10 +83,10 @@ export default function profile() {
               }}
               component="ul"
             >
-              {chipData.map((data) => {
+              {chipData.map((data,i) => {
                 let icon;
                 return (
-                  <ListItem key={data.key}>
+                  <ListItem key={i}>
                     <Chip
                       icon={icon}
                       label={data.label}
@@ -114,10 +118,10 @@ export default function profile() {
               }}
               component="ul"
             >
-              {chipData.map((data) => {
+              {chipData.map((data,i) => {
                 let icon;
                 return (
-                  <ListItem key={data.key}>
+                  <ListItem key={i}>
                     <Chip
                       icon={icon}
                       label={data.label}
@@ -131,6 +135,7 @@ export default function profile() {
 
         </div>
       </div>
+     
       <div className={styles.rightprof}>
         <div className={styles.inright}>
 <div className={styles.about}>
@@ -186,6 +191,7 @@ export default function profile() {
 </div>
         </div>
       </div>
+     
     </div>
   )
 }

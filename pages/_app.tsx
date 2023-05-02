@@ -1,11 +1,13 @@
-import { taskApi } from '@/features/Register'
+import { store } from '@/store'
 import '@/styles/globals.css'
-import { ApiProvider } from '@reduxjs/toolkit/dist/query/react'
+
 import type { AppProps } from 'next/app'
+import { Provider } from 'react-redux'
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <ApiProvider api={taskApi}>
+  return  <Provider store={store} >
     <Component {...pageProps} />
-  </ApiProvider>
+  </Provider>
+  
 
 }
