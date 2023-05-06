@@ -6,6 +6,7 @@ import Image from 'next/image'
 import prof from "../../../public/profile.png"
 import port from "../../../public/portfolio.png"
 import lay from "../../../public/layers.png"
+import imgback from "../../../public/imgback.jpg"
 
 const top100Films = [
     { title: 'The Shawshank Redemption', year: 1994 },
@@ -15,7 +16,19 @@ const top100Films = [
 ]
 export default function projects() {
   return (
-    <div>
+    <div className={styles.alledit}>
+       <div>
+        <div className={styles.backimg} >
+
+        <Image src={imgback}
+       height='300'
+       width='1250'
+        alt='alt'/>
+       <h2 className={styles.edithead}>
+         EDIT PROJECTS
+        </h2>
+        </div>
+      </div>
     <div className={styles.down}>
     <div className={styles.leftbar}>
         <div className={styles.inleft}>

@@ -6,8 +6,9 @@ import Image from 'next/image'
 import prof from "../../../public/profile.png"
 import port from "../../../public/portfolio.png"
 import lay from "../../../public/layers.png"
+import imgback from "../../../public/imgback.jpg"
 import { useDropzone } from 'react-dropzone'
-import piexif from "piexif-ts"
+
 
 const top100Films = [
     { title: 'The Shawshank Redemption', year: 1994 },
@@ -22,27 +23,25 @@ export default function profile() {
   const [file,setfile]=useState<File>();
   const [filert,setfilert]=useState<string>('');
 
-  const convertToBase64=(file:File)=>{
-
-    return new Promise((resolve,reject)=>{
-      const fileReader=new FileReader();
-      fileReader.readAsDataURL(file);
-     
-      fileReader.onload=()=>{
-        resolve(fileReader.result);
-      }
-      fileReader.onerror=(error)=>{
-        reject(error);
-      }
-    })
-  }
   
   
  
   
 
   return (
-    <div>
+    <div className={styles.alledit}>
+      <div>
+        <div className={styles.backimg} >
+
+        <Image src={imgback}
+       height='300'
+       width='1250'
+        alt='alt'/>
+       <h2 className={styles.edithead}>
+         EDIT PROFILE
+        </h2>
+        </div>
+      </div>
         <div className={styles.down}>
         <div className={styles.leftbar}>
             <div className={styles.inleft}>

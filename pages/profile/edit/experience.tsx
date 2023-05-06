@@ -1,20 +1,35 @@
 import React from 'react'
 import styles from "../../../styles/Edit.module.css"
-import { Box, Button, TextField } from '@mui/material'
+import { Box, Button, TextField, TextFieldProps } from '@mui/material'
 import Link from 'next/link'
 import Image from 'next/image'
 import prof from "../../../public/profile.png"
 import port from "../../../public/portfolio.png"
 import lay from "../../../public/layers.png"
 import { Dayjs } from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import imgback from "../../../public/imgback.jpg"
+
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 export default function experience() {
   const [value, setValue] = React.useState<Dayjs | null>(null);
+  console.log(value);
   return (
-    <div>
+    <div className={styles.alledit}>
+        <div>
+        <div className={styles.backimg} >
+
+        <Image src={imgback}
+       height='300'
+       width='1250'
+        alt='alt'/>
+       <h2 className={styles.edithead}>
+         EDIT EXPERIENCE
+        </h2>
+        </div>
+      </div>
         <div className={styles.down}>
         <div className={styles.leftbar}>
             <div className={styles.inleft}>
@@ -107,11 +122,26 @@ export default function experience() {
           defaultValue=" "
           placeholder='Select End Date'
         /> */}
-        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['DatePicker']}>
-        <DatePicker value={value} onChange={(newValue) => setValue(newValue)} />
-      </DemoContainer>
-    </LocalizationProvider> */}
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker
+        label="start date"
+        value={value}
+        onChange={(newValue) => {
+          setValue(newValue);
+        }}
+        // renderInput={(params: JSX.IntrinsicAttributes & TextFieldProps) => <TextField {...params} />}
+      />
+    </LocalizationProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker
+        label="end date"
+        value={value}
+        onChange={(newValue) => {
+          setValue(newValue);
+        }}
+        // renderInput={(params: JSX.IntrinsicAttributes & TextFieldProps) => <TextField {...params} />}
+      />
+    </LocalizationProvider>
         </div>
         <TextField
         className={styles.field}

@@ -23,9 +23,10 @@
     /* border: 1px solid red; */
 }
 .back{
+    background-image: url("https://images.unsplash.com/photo-1561211974-8a2737b4dcac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzY0fHxhYnN0cmFjdHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60");
     width:100%;
     height: 100px;
-    background-color: yellow;
+    /* background-color: yellow; */
     position: relative;
 }
 .git{
