@@ -35,4 +35,5 @@ export const projectApi=createApi({
             method:"DELETE"
         })
        })
-    })project
+    })
+})
