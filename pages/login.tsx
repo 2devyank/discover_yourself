@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 export default function login() {
   const router=useRouter();
 
-  const cookies = new Cookies();
+  
   const [addTask, { isSuccess }] = useLoginTaskMutation();
   // const {status,error,data}=useLoginTaskMutation();
   const emailref = useRef<HTMLInputElement>(null);

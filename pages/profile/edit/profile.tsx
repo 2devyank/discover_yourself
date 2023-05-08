@@ -76,7 +76,6 @@ const top100Films = [
     { title: 'Redux' },
     { title: 'Ruby' },
     { title: 'Rust' },
-    { title: 'Rust' },
     { title: 'Scala' },
     { title: 'SQLite' },
     { title: 'Swift' },
@@ -92,18 +91,18 @@ const emailRef=useRef<HTMLInputElement>(null);
 const portRef=useRef<HTMLInputElement>(null);
 const expRef=useRef<HTMLInputElement>(null);
 const aboutRef=useRef<HTMLInputElement>(null);
-const sRef=useRef<HTMLInputElement>(null);
+const sRef=useRef<HTMLInputElement>();
 const [skillRef,setskillRef]=useState<string[]>([]);
 
 const handleprofile=(e:React.FormEvent)=>{
 e.preventDefault();
 const pro={
-  nameRef,
-  emailRef,
-  portRef,
-  expRef,
-  aboutRef,
-  sRef
+ name:nameRef.current?.value,
+  email:emailRef.current?.value,
+  portfoilo:portRef.current?.value,
+  experience:expRef.current?.value,
+  about:aboutRef.current?.value,
+  skills:skillRef
 
 }
 console.log(pro)
@@ -236,7 +235,7 @@ console.log(pro)
         filterSelectedOptions
         renderInput={(params) => (
           <TextField
-          inputRef={sRef}
+        
             {...params}
             label="Add skills"
             placeholder="Skills"
