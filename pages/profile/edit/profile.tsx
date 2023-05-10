@@ -93,7 +93,7 @@ const expRef=useRef<HTMLInputElement>(null);
 const aboutRef=useRef<HTMLInputElement>(null);
 const sRef=useRef<HTMLInputElement>(null);
 const [skillRef,setskillRef]=useState<string[]>([]);
-const [value,setvalue]=useState<string[]>([top100Films[0]]);
+
 
 const handleprofile=(e:React.FormEvent)=>{
 e.preventDefault();

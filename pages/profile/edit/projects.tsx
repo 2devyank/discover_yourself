@@ -7,6 +7,7 @@ import prof from "../../../public/profile.png"
 import port from "../../../public/portfolio.png"
 import lay from "../../../public/layers.png"
 import imgback from "../../../public/imgback.jpg"
+import { usePosteprojectMutation } from '@/features/Project'
 
 const top100Films = [
   
@@ -90,7 +91,9 @@ const sourceRef=useRef<HTMLInputElement>(null);
 const desRef=useRef<HTMLInputElement>(null);
 const [tagRef,settagRef]=useState<string[]>([]);
 
-const handleproject=(e:React.FormEvent)=>{
+const [Addproject,result]=usePosteprojectMutation();
+
+const handleproject=async(e:React.FormEvent)=>{
   e.preventDefault();
   const pro={
     title:titleRef.current?.value,
@@ -101,6 +104,7 @@ const handleproject=(e:React.FormEvent)=>{
   
   }
   console.log(pro)
+  await Addproject(pro);
   }
   return (
     <div className={styles.alledit}>

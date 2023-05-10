@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
 const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
@@ -9,27 +9,27 @@ export const projectApi=createApi({
         baseUrl:"http://localhost:8080/"
     }),
     endpoints:(builder)=>({
-       eproject: builder.query({
+       project: builder.query({
         query:()=>({
             url:"/project",
             headers:{"Authorization":`Bearer ${token}`}
         })
        }),
-       posteproject:builder.query({
+       posteproject:builder.mutation({
         query:(exp)=>({
             url:"/project",
             method:"POST",
             body:{exp}
         })
        }),
-       putproject:builder.query({
+       putproject:builder.mutation({
         query:({id,...exp})=>({
             url:`/project/${id}`,
             method:"PUT",
             body:{exp}
         })
        }),
-       deleteproject:builder.query({
+       deleteproject:builder.mutation({
         query:(id)=>({
             url:`/project/${id}`,
             method:"DELETE"
@@ -37,3 +37,5 @@ export const projectApi=createApi({
        })
     })
 })
+
+ export const {usePutprojectMutation,useDeleteprojectMutation,usePosteprojectMutation,useProjectQuery}=projectApi;

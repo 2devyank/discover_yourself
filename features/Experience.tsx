@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
 const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
@@ -15,21 +15,21 @@ export const expApi=createApi({
             headers:{"Authorization":`Bearer ${token}`}
         })
        }),
-       postexps:builder.query({
+       postexps:builder.mutation({
         query:(exp)=>({
             url:"/exp",
             method:"POST",
             body:{exp}
         })
        }),
-       putexp:builder.query({
+       putexp:builder.mutation({
         query:({id,...exp})=>({
             url:`/exp/${id}`,
             method:"PUT",
             body:{exp}
         })
        }),
-       deleteexp:builder.query({
+       deleteexp:builder.mutation({
         query:(id)=>({
             url:`/exp/${id}`,
             method:"DELETE"
@@ -37,3 +37,5 @@ export const expApi=createApi({
        })
     })
 })
+
+export const {useExpsQuery,usePostexpsMutation,useDeleteexpMutation,usePutexpMutation}=expApi;
