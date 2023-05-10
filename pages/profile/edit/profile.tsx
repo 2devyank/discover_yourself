@@ -11,78 +11,77 @@ import { useDropzone } from 'react-dropzone'
 
 
 const top100Films = [
-    { title: '.NET CORE' },
-    { title: 'Alpine.JS' },
-    { title: 'Android' },
-    { title: 'React' },
-    { title: 'Apache Hadoop' },
-    { title: 'Apex' },
-    { title: 'ASP.NET' },
-    { title: 'AWS' },
-    { title: 'BackBone.JS' },
-    { title: 'Bootstrap' },
-    { title: 'Bulma' },
-    { title: 'C' },
-    { title: 'C++' },
-    { title: 'C#' },
-    { title: 'CakePHP' },
-    { title: 'Cassandra' },
-    { title: 'Computer Vision' },
-    { title: 'CSS' },
-    { title: 'CouchBase' },
-    { title: 'Cycle.js' },
-    { title: 'Django' },
-    { title: 'Docker' },
-    { title: 'DynamoDB' },
-    { title: 'Elastic Search' },
-    { title: 'Electron' },
-    { title: 'Elixir' },
-    { title: 'Ember.js' },
-    { title: 'FastAPI' },
-    { title: 'Firebase' },
-    { title: 'Firestore' },
-    { title: 'Flask' },
-    { title: 'Gatsby.js' },
-    { title: 'Git' },
-    { title: 'GITHUB' },
-    { title: 'Golang' },
-    { title: 'GraphQL' },
-    { title: 'HTML' },
-    { title: 'Hibernate' },
-    { title: 'Java' },
-    { title: 'JavaScript' },
-    { title: 'Jenkins' },
-    { title: 'jQuery' },
-    { title: 'Kotlin' },
-    { title: 'kubernetes' },
-    { title: 'laravel' },
-    { title: 'Machine Learning' },
-    { title: 'MariaDB' },
-    { title: 'MongoDB' },
-    { title: 'Mysql' },
-    { title: 'Nest.js' },
-    { title: 'Next.js' },
-    { title: 'NumPy' },
-    { title: 'Nuxt' },
-    { title: 'Nodejs' },
-    { title: 'Oracle DB' },
-    { title: 'Perl' },
-    { title: 'PHP' },
-    { title: 'PostgreSQL' },
-    { title: 'Preact' },
-    { title: 'Python' },
-    { title: 'React Native' },
-    { title: 'Redis' },
-    { title: 'Redux' },
-    { title: 'Ruby' },
-    { title: 'Rust' },
-    { title: 'Rust' },
-    { title: 'Scala' },
-    { title: 'SQLite' },
-    { title: 'Swift' },
-    { title: 'Typescript' },
-    { title: 'Tailwind CSS' },
-    { title: 'Vue' }
+     '.NET CORE' ,
+     'Alpine.JS',
+     'Android' ,
+     'React' ,
+     'Apache Hadoop' ,
+     'Apex' ,
+     'ASP.NET' ,
+     'AWS' ,
+     'BackBone.J' ,
+     'Bootstrap' ,
+     'Bulma' ,
+     'C' ,
+     'C++' ,
+     'C#' ,
+     'CakePHP' ,
+     'Cassandra' ,
+     'Computer Vision' ,
+     'CSS' ,
+     'CouchBase' ,
+     'Cycle.js' ,
+     'Django' ,
+     'Docker' ,
+     'DynamoDB' ,
+     'Elastic Search' ,
+     'Electron' ,
+     'Elixir' ,
+     'Ember.js' ,
+     'FastAPI' ,
+     'Firebase' ,
+     'Firestore' ,
+     'Flask' ,
+     'Gatsby.js' ,
+     'Git' ,
+     'GITHUB' ,
+     'Golang' ,
+     'GraphQL' ,
+     'HTML' ,
+     'Hibernate' ,
+     'Java' ,
+     'JavaScript' ,
+     'Jenkins' ,
+     'jQuery' ,
+     'Kotlin' ,
+     'kubernetes' ,
+     'laravel' ,
+     'Machine Learning' ,
+     'MariaDB' ,
+     'MongoDB' ,
+     'Mysql' ,
+     'Nest.js' ,
+     'Next.js' ,
+     'NumPy' ,
+     'Nuxt' ,
+     'Nodejs' ,
+     'Oracle DB' ,
+     'Perl' ,
+    'PHP' ,
+     'PostgreSQL' ,
+     'Preact' ,
+     'Python' ,
+     'React Native' ,
+     'Redis' ,
+     'Redux' ,
+     'Ruby' ,
+     'Rust' ,
+    'Scala' ,
+     'SQLite' ,
+     'Swift' ,
+     'Typescript' ,
+     'Tailwind CSS' ,
+     'Vue' 
    
 ]
 export default function profile() {  
@@ -94,16 +93,17 @@ const expRef=useRef<HTMLInputElement>(null);
 const aboutRef=useRef<HTMLInputElement>(null);
 const sRef=useRef<HTMLInputElement>(null);
 const [skillRef,setskillRef]=useState<string[]>([]);
+const [value,setvalue]=useState<string[]>([top100Films[0]]);
 
 const handleprofile=(e:React.FormEvent)=>{
 e.preventDefault();
 const pro={
-  nameRef,
-  emailRef,
-  portRef,
-  expRef,
-  aboutRef,
-  sRef
+  name:nameRef.current?.value,
+  email:emailRef.current?.value,
+  portfoilo:portRef.current?.value,
+  experience:expRef.current?.value,
+  about:aboutRef.current?.value,
+  skills:skillRef
 
 }
 console.log(pro)
@@ -218,6 +218,7 @@ console.log(pro)
          <TextField
         className={styles.field}
           required
+           
           inputRef={expRef}
           id="outlined-required"
           label="Expertise"
@@ -229,14 +230,16 @@ console.log(pro)
         <Autocomplete
         multiple
         id="tags-outlined"
-       
+      
         options={top100Films}
-        getOptionLabel={(option) => option.title}
+        getOptionLabel={(option) => option}
         // defaultValue={[top100Films[0]]}
         filterSelectedOptions
+        onChange={(e,v)=>{
+          setskillRef(v);
+        }}
         renderInput={(params) => (
           <TextField
-          inputRef={sRef}
             {...params}
             label="Add skills"
             placeholder="Skills"

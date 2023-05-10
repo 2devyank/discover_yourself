@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import styles from "../../../styles/Edit.module.css"
 import { Autocomplete, Box, Button, TextField } from '@mui/material'
 import Link from 'next/link'
@@ -9,81 +9,99 @@ import lay from "../../../public/layers.png"
 import imgback from "../../../public/imgback.jpg"
 
 const top100Films = [
-  { title: '.NET CORE' },
-  { title: 'Alpine.JS' },
-  { title: 'Android' },
-  { title: 'React' },
-  { title: 'Apache Hadoop' },
-  { title: 'Apex' },
-  { title: 'ASP.NET' },
-  { title: 'AWS' },
-  { title: 'BackBone.JS' },
-  { title: 'Bootstrap' },
-  { title: 'Bulma' },
-  { title: 'C' },
-  { title: 'C++' },
-  { title: 'C#' },
-  { title: 'CakePHP' },
-  { title: 'Cassandra' },
-  { title: 'Computer Vision' },
-  { title: 'CSS' },
-  { title: 'CouchBase' },
-  { title: 'Cycle.js' },
-  { title: 'Django' },
-  { title: 'Docker' },
-  { title: 'DynamoDB' },
-  { title: 'Elastic Search' },
-  { title: 'Electron' },
-  { title: 'Elixir' },
-  { title: 'Ember.js' },
-  { title: 'FastAPI' },
-  { title: 'Firebase' },
-  { title: 'Firestore' },
-  { title: 'Flask' },
-  { title: 'Gatsby.js' },
-  { title: 'Git' },
-  { title: 'GITHUB' },
-  { title: 'Golang' },
-  { title: 'GraphQL' },
-  { title: 'HTML' },
-  { title: 'Hibernate' },
-  { title: 'Java' },
-  { title: 'JavaScript' },
-  { title: 'Jenkins' },
-  { title: 'jQuery' },
-  { title: 'Kotlin' },
-  { title: 'kubernetes' },
-  { title: 'laravel' },
-  { title: 'Machine Learning' },
-  { title: 'MariaDB' },
-  { title: 'MongoDB' },
-  { title: 'Mysql' },
-  { title: 'Nest.js' },
-  { title: 'Next.js' },
-  { title: 'NumPy' },
-  { title: 'Nuxt' },
-  { title: 'Nodejs' },
-  { title: 'Oracle DB' },
-  { title: 'Perl' },
-  { title: 'PHP' },
-  { title: 'PostgreSQL' },
-  { title: 'Preact' },
-  { title: 'Python' },
-  { title: 'React Native' },
-  { title: 'Redis' },
-  { title: 'Redux' },
-  { title: 'Ruby' },
-  { title: 'Rust' },
-  { title: 'Rust' },
-  { title: 'Scala' },
-  { title: 'SQLite' },
-  { title: 'Swift' },
-  { title: 'Typescript' },
-  { title: 'Tailwind CSS' },
-  { title: 'Vue' }
- 
+  
+  '.NET CORE' ,
+  'Alpine.JS',
+  'Android' ,
+  'React' ,
+  'Apache Hadoop' ,
+  'Apex' ,
+  'ASP.NET' ,
+  'AWS' ,
+  'BackBone.J' ,
+  'Bootstrap' ,
+  'Bulma' ,
+  'C' ,
+  'C++' ,
+  'C#' ,
+  'CakePHP' ,
+  'Cassandra' ,
+  'Computer Vision' ,
+  'CSS' ,
+  'CouchBase' ,
+  'Cycle.js' ,
+  'Django' ,
+  'Docker' ,
+  'DynamoDB' ,
+  'Elastic Search' ,
+  'Electron' ,
+  'Elixir' ,
+  'Ember.js' ,
+  'FastAPI' ,
+  'Firebase' ,
+  'Firestore' ,
+  'Flask' ,
+  'Gatsby.js' ,
+  'Git' ,
+  'GITHUB' ,
+  'Golang' ,
+  'GraphQL' ,
+  'HTML' ,
+  'Hibernate' ,
+  'Java' ,
+  'JavaScript' ,
+  'Jenkins' ,
+  'jQuery' ,
+  'Kotlin' ,
+  'kubernetes' ,
+  'laravel' ,
+  'Machine Learning' ,
+  'MariaDB' ,
+  'MongoDB' ,
+  'Mysql' ,
+  'Nest.js' ,
+  'Next.js' ,
+  'NumPy' ,
+  'Nuxt' ,
+  'Nodejs' ,
+  'Oracle DB' ,
+  'Perl' ,
+ 'PHP' ,
+  'PostgreSQL' ,
+  'Preact' ,
+  'Python' ,
+  'React Native' ,
+  'Redis' ,
+  'Redux' ,
+  'Ruby' ,
+  'Rust' ,
+ 'Scala' ,
+  'SQLite' ,
+  'Swift' ,
+  'Typescript' ,
+  'Tailwind CSS' ,
+  'Vue' 
+
 ]
 export default function projects() {
+  const titleRef=useRef<HTMLInputElement>(null);
+const deployRef=useRef<HTMLInputElement>(null);
+const sourceRef=useRef<HTMLInputElement>(null);
+const desRef=useRef<HTMLInputElement>(null);
+const [tagRef,settagRef]=useState<string[]>([]);
+
+const handleproject=(e:React.FormEvent)=>{
+  e.preventDefault();
+  const pro={
+    title:titleRef.current?.value,
+    source:sourceRef.current?.value,
+    deploy:deployRef.current?.value,
+    description:desRef.current?.value,
+    skills:tagRef
+  
+  }
+  console.log(pro)
+  }
   return (
     <div className={styles.alledit}>
        <div>
@@ -152,6 +170,7 @@ export default function projects() {
         <Box
   component="form"
   className={styles.box}
+  onSubmit={handleproject}
   noValidate
   autoComplete="off"
 >
@@ -160,6 +179,7 @@ export default function projects() {
     className={styles.field}
       required
       id="outlined-required"
+      inputRef={titleRef}
       label="Title"
       defaultValue=" "
       placeholder='Enter Title'
@@ -169,6 +189,7 @@ export default function projects() {
       required
       id="outlined-required"
       label="Source Link"
+      inputRef={sourceRef}
       defaultValue=" "
       placeholder='Enter Source Link'
     />
@@ -179,6 +200,7 @@ export default function projects() {
       required
       id="outlined-required"
       label="Deploy Link"
+      inputRef={deployRef}
       defaultValue=" "
       placeholder='Enter Deploy Link'
     />
@@ -188,8 +210,10 @@ export default function projects() {
         multiple
         id="tags-outlined"
         options={top100Films}
-        getOptionLabel={(option) => option.title}
-        defaultValue={[top100Films[0]]}
+        getOptionLabel={(option) => option}
+        onChange={(e,v)=>{
+          settagRef(v);
+        }}
         filterSelectedOptions
         renderInput={(params) => (
           <TextField
@@ -203,10 +227,12 @@ export default function projects() {
     className={styles.field}
       id="outlined-multiline-static"
       label="About Project"
+      inputRef={desRef}
       multiline
       rows={4}
       defaultValue=" "
     />
+    <Button type='submit'>Submit</Button>
   
     </Box>
       </div>
