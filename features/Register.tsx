@@ -53,8 +53,15 @@ endpoints:(builder)=>({
       body:task
     })
   }) ,
+  UpdateTask:builder.mutation({
+    query:({id,...task})=>({
+      url:`/updateuser/${id}`,
+      method:"PUT",
+      body:{task}
+    })
+  })
   
 })
 })
 
-export const {useUsersQuery,useLoginTaskMutation,useAddauthMutation} =authApi;
+export const {useUsersQuery,useLoginTaskMutation,useAddauthMutation,useUpdateTaskMutation} =authApi;

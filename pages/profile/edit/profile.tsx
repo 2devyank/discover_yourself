@@ -8,6 +8,7 @@ import port from "../../../public/portfolio.png"
 import lay from "../../../public/layers.png"
 import imgback from "../../../public/imgback.jpg"
 import { useDropzone } from 'react-dropzone'
+import { useUpdateTaskMutation } from '@/features/Register'
 
 
 const top100Films = [
@@ -93,9 +94,9 @@ const expRef=useRef<HTMLInputElement>(null);
 const aboutRef=useRef<HTMLInputElement>(null);
 const sRef=useRef<HTMLInputElement>(null);
 const [skillRef,setskillRef]=useState<string[]>([]);
+const [Putprofile,result]=useUpdateTaskMutation();
 
-
-const handleprofile=(e:React.FormEvent)=>{
+const handleprofile=async(e:React.FormEvent)=>{
 e.preventDefault();
 const pro={
   name:nameRef.current?.value,
@@ -107,6 +108,7 @@ const pro={
 
 }
 console.log(pro)
+// await  
 }
 
   return (
