@@ -1,0 +1,48 @@
+.all{
+    display: flex;
+    flex-direction: column;
+}
+.frontview{
+    display: flex;
+    padding: 20px 20px;
+}
+.leftcontent{
+    padding: 50px 50px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  
+}
+.one{
+    align-self: flex-start;
+    font-size: 48px;
+}
+.quotes{
+    display: flex;
+   gap: 40px;
+    width: 600px;
+    
+}
+.albert{
+    align-self: flex-end;
+    font-size: 18px;
+}
+
+.youare{
+    align-self: flex-start;
+    font-size: 48px;
+    color: rgb(163, 163, 228);
+  
+}
+.fool{
+    align-self:last baseline;
+    font-size: 24px;
+}
+.rightimage{
+    width: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
