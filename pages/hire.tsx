@@ -21,7 +21,7 @@ export default function Hire() {
             <div className={styles.quotes}>
               <Image 
               src={quote}
-            
+            className={styles.quo}
               width={50}
               height={50}
               alt="asdf"
@@ -32,12 +32,14 @@ export default function Hire() {
                 <span className={styles.albert}>~ Albert Einstein</span>
             </div>
             <div className={styles.rightimage}>
+              <div className={styles.imgcontainer}>
                 <Image
                 src={select}           
                 alt="asdf"     
-                width={500}
-                height={500}
+                className={styles.img}
+               fill
                 />
+                </div>
             </div>
         </div>
 

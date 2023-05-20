@@ -15,6 +15,18 @@
     justify-content: center;
   
 }
+.imgcontainer{
+    width: 100%;
+    
+position: unset !important;
+    
+    .img{
+        object-fit: contain;
+        width: 100% !important;
+        position: relative !important;
+        height: unset !important;
+    }
+}
 .one{
     align-self: flex-start;
     font-size: 48px;
@@ -22,7 +34,7 @@
 .quotes{
     display: flex;
    gap: 40px;
-    width: 600px;
+    width: 100%;
     
 }
 .albert{
@@ -45,4 +57,41 @@
 display: flex;
 align-items: center;
 justify-content: center;
+}
+
+
+@media(max-width:800px){
+.frontview{
+    flex-direction: column;
+    padding: 10px 10px;
+}
+.leftcontent{
+    width: 100%;
+    padding: 0px 0px;
+}
+.quo{
+    z-index: 0;
+    opacity:0.1;
+}
+.rightimage{
+    width: 100%;
+}
+.youare{
+    font-size: 24px;
+}
+.fool{
+    font-size: 18px;
+    position: absolute;
+    left: 0px;
+    align-self:center;
+}
+.one{
+    font-size: 24px;
+}
+.quotes{
+    gap: 0px;
+    position: relative;
+    /* border: 1px solid red; */
+    
+}
 }
