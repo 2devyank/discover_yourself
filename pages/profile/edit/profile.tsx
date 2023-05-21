@@ -85,6 +85,12 @@ const top100Films = [
      'Vue' 
    
 ]
+const availablelist=[
+'Full Time',
+'Part Time',
+'Internship',
+'Code Colab'
+]
 export default function profile() {  
 
 const nameRef=useRef<HTMLInputElement>(null);
@@ -94,6 +100,7 @@ const expRef=useRef<HTMLInputElement>(null);
 const aboutRef=useRef<HTMLInputElement>(null);
 const sRef=useRef<HTMLInputElement>(null);
 const [skillRef,setskillRef]=useState<string[]>([]);
+const [availableRef,setavailableRef]=useState<string[]>([]);
 const [Putprofile,result]=useUpdateTaskMutation();
 
 const handleprofile=async(e:React.FormEvent)=>{
@@ -104,7 +111,8 @@ const pro={
   portfoilo:portRef.current?.value,
   experience:expRef.current?.value,
   about:aboutRef.current?.value,
-  skills:skillRef
+  skills:skillRef,
+  available:availableRef
 
 }
 console.log(pro)
@@ -245,6 +253,25 @@ console.log(pro)
             {...params}
             label="Add skills"
             placeholder="Skills"
+          />
+        )}
+      />
+        <Autocomplete
+        multiple
+        id="tags-outlined"
+      
+        options={availablelist}
+        getOptionLabel={(option) => option}
+        // defaultValue={[top100Films[0]]}
+        filterSelectedOptions
+        onChange={(e,v)=>{
+          setavailableRef(v)
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Availablity"
+            placeholder="Availablity"
           />
         )}
       />
