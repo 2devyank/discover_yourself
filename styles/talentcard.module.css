@@ -1,0 +1,67 @@
+.skillcon{
+    display: flex;
+    gap: 10px;
+}
+.skillbox{
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px 5px;
+    /* width: 2%; */
+    text-align: center;
+    color: blue;
+}
+.imgcolor{
+    width: 100px ;
+    height: 100px;
+    border-radius: 50%;
+    background-color: yellow;
+}
+.cardcred{
+    display: flex;
+    flex-direction: column;
+    color:white;
+   font-size: 24px;
+   font-weight: 600;
+}
+.leftcardhead{
+    display: flex;
+    gap: 20px;
+}
+.cardhead{
+    display: flex;
+    justify-content: space-between;
+ 
+    padding: 10px 10px;
+    background-image: url("https://images.unsplash.com/photo-1561211974-8a2737b4dcac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzY0fHxhYnN0cmFjdHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1300&q=60");
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.borcard{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border:1px solid red;
+    padding :20px 20px;
+}
+.back{ 
+    display: flex;
+    gap: 8px;
+}
+.cardfoot{
+    border-top: 1px solid grey;
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+}
+@media(max-width:800px){
+
+.leftcardhead{
+    flex-direction: column;
+}
+.back{
+    flex-direction: column;
+}
+   
+}

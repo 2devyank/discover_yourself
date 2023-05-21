@@ -3,6 +3,7 @@ import styles from "../styles/hire.module.css"
 import Image from 'next/image'
 import select from "../public/select.png"
 import quote from "../public/quote.png"
+import TalentCard from './components/TalentCard'
 
 export default function Hire() {
   return (
@@ -47,7 +48,7 @@ export default function Hire() {
 
         {/* list and filter table in below div */}
         <div>
-            <div></div>
+            <div><TalentCard/></div>
             <div></div>
         </div>
 
