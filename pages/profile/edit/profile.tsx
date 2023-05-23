@@ -8,7 +8,8 @@ import port from "../../../public/portfolio.png"
 import lay from "../../../public/layers.png"
 import imgback from "../../../public/imgback.jpg"
 import { useDropzone } from 'react-dropzone'
-import { useUpdateTaskMutation } from '@/features/Register'
+import { useUpdateTaskMutation, useUsersQuery } from '@/features/Register'
+import { useRouter } from 'next/router'
 
 
 const top100Films = [
@@ -91,8 +92,11 @@ const availablelist=[
 'Internship',
 'Code Colab'
 ]
-export default function profile() {  
-
+export default function profile() { 
+  const {data,error,isLoading,isSuccess}=useUsersQuery(); 
+  console.log(data);
+  // console.log(data?.portfolio)
+const router=useRouter();
 const nameRef=useRef<HTMLInputElement>(null);
 const emailRef=useRef<HTMLInputElement>(null);
 const portRef=useRef<HTMLInputElement>(null);
@@ -101,25 +105,38 @@ const aboutRef=useRef<HTMLInputElement>(null);
 const sRef=useRef<HTMLInputElement>(null);
 const [skillRef,setskillRef]=useState<string[]>([]);
 const [availableRef,setavailableRef]=useState<string[]>([]);
-const [Putprofile,result]=useUpdateTaskMutation();
+const [updateTask]=useUpdateTaskMutation();
 
+const id = typeof window !== 'undefined' ? localStorage.getItem('userid') : null
+console.log(id)
 const handleprofile=async(e:React.FormEvent)=>{
 e.preventDefault();
-const pro={
+const task={
   name:nameRef.current?.value,
   email:emailRef.current?.value,
   portfoilo:portRef.current?.value,
   experience:expRef.current?.value,
   about:aboutRef.current?.value,
   skills:skillRef,
-  available:availableRef
-
+  available:availableRef,
+  id:id
 }
-console.log(pro)
+console.log(task)
+updateTask(task);
+router.push("/profile/profile");
+
 // await  
 }
 
   return (
+    <>
+    
+    <div>
+    {error && <p>An error occured</p>}
+  {isLoading && <p>Loading...</p>}
+    </div>
+    {isSuccess && (
+
     <div className={styles.alledit}>
       <div>
         <div className={styles.backimg} >
@@ -202,7 +219,7 @@ console.log(pro)
           required
           id="outlined-required"
           label="Name"
-          defaultValue=" "
+          defaultValue={data?.name}
           placeholder='Enter Name'
         />
          <TextField
@@ -211,7 +228,7 @@ console.log(pro)
           inputRef={emailRef}
           id="outlined-required"
           label="Email"
-          defaultValue=" "
+          defaultValue={data?.email}
           placeholder='Enter Email'
         />
         </div>
@@ -222,7 +239,7 @@ console.log(pro)
           inputRef={portRef}
           id="outlined-required"
           label="Portfolio"
-          defaultValue=" "
+          defaultValue={data?.portfoilo}
           placeholder='Enter Portfolio URL'
         />
          <TextField
@@ -232,7 +249,7 @@ console.log(pro)
           inputRef={expRef}
           id="outlined-required"
           label="Expertise"
-          defaultValue=" "
+          defaultValue={data?.expertise}
           placeholder='Enter expertise'
         />
        
@@ -243,7 +260,7 @@ console.log(pro)
       
         options={top100Films}
         getOptionLabel={(option) => option}
-        // defaultValue={[top100Films[0]]}
+        defaultValue={data?.skills}
         filterSelectedOptions
         onChange={(e,v)=>{
           setskillRef(v);
@@ -262,7 +279,7 @@ console.log(pro)
       
         options={availablelist}
         getOptionLabel={(option) => option}
-        // defaultValue={[top100Films[0]]}
+        defaultValue={data?.available}
         filterSelectedOptions
         onChange={(e,v)=>{
           setavailableRef(v)
@@ -270,8 +287,8 @@ console.log(pro)
         renderInput={(params) => (
           <TextField
             {...params}
-            label="Availablity"
-            placeholder="Availablity"
+            label="Availability"
+            placeholder="Availability"
           />
         )}
       />
@@ -282,7 +299,7 @@ console.log(pro)
           label="About YourSelf"
           multiline
           rows={4}
-          defaultValue=" "
+          defaultValue="yh"
         />
         <Button type="submit">Submit</Button>
         </Box>
@@ -290,5 +307,7 @@ console.log(pro)
         </div>
     </div>
     </div>
+    )}
+    </>
   )
 }

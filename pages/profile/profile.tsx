@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import styles from "../../styles/prof.module.css";
 import github from "../../public/github.png"
@@ -16,8 +17,13 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import AddIcon from '@mui/icons-material/Add';
 import TodayIcon from '@mui/icons-material/Today';
 import { useUsersQuery } from '@/features/Register';
+import { useRouter } from 'next/router';
 
 export default function profile() {
+  const router=useRouter();
+  const handleupdateprofile=()=>{
+router.push("/profile/edit/profile")
+  }
   interface ChipData {
     key: number;
     label: string;
@@ -37,11 +43,23 @@ export default function profile() {
     { key: 4, label: 'Vue.js' },
   ]);
 
-const {data,error,isSuccess}=useUsersQuery();
+const {data,error,isLoading,isSuccess}=useUsersQuery();
 // console.log(error);
 console.log(data);
+const s=data?.id;
+typeof window !== 'undefined' ? localStorage.setItem("userid",s as unknown as string) : null
+
 console.log(data?.email);
   return (
+    <>
+    
+    <div>
+    {error && <p>An error occured</p>}
+  {isLoading && <p>Loading...</p>}
+    </div>
+    {isSuccess && (
+
+   
     <div className={styles.prof}>
       <div className={styles.leftprofile}>
         <div className={styles.inleft}>
@@ -59,8 +77,8 @@ console.log(data?.email);
               alt="linkedin"
             />
           </div>
-          <span>Name</span>
-          <span>Designation</span>
+          <span>{data.name}</span>
+          <span>{data.expertise}</span>
           <div>
 
             <Image
@@ -83,13 +101,14 @@ console.log(data?.email);
               }}
               component="ul"
             >
-              {chipData.map((data,i) => {
+              {data.skills.map((data,i) => {
                 let icon;
                 return (
                   <ListItem key={i}>
                     <Chip
                       icon={icon}
-                      label={data.label}
+                      label={data}
+                      // label={data.label}
 
                     />
                   </ListItem>
@@ -118,13 +137,13 @@ console.log(data?.email);
               }}
               component="ul"
             >
-              {chipData.map((data,i) => {
+              {data.available.map((data,i) => {
                 let icon;
                 return (
                   <ListItem key={i}>
                     <Chip
                       icon={icon}
-                      label={data.label}
+                      label={data}
 
                     />
                   </ListItem>
@@ -142,10 +161,10 @@ console.log(data?.email);
   <div className={styles.apart}>
 
   <span>About me</span>
-  <ModeEditIcon/>
+  <ModeEditIcon className={styles.pen}  onClick={handleupdateprofile}/>
   </div>
   <span>
-  body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam
+ {data.about}
   </span>
   </div>
 <div className={styles.experience}>
@@ -193,5 +212,7 @@ console.log(data?.email);
       </div>
      
     </div>
+     )}
+    </>
   )
 }

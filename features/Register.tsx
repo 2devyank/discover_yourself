@@ -8,12 +8,13 @@ interface output{
   id:number,
   name:string,
   email:string,
-  portfolio:string,
+  portfoilo:string,
   skills:string[],
   expertise:string,
   about:string,
   password:string,
-  img:string
+  img:string,
+  available:string[]
 }
 
 interface Root {
@@ -56,8 +57,9 @@ endpoints:(builder)=>({
   UpdateTask:builder.mutation({
     query:({id,...task})=>({
       url:`/updateuser/${id}`,
+      headers:{"Authorization":`Bearer ${token}`},
       method:"PUT",
-      body:{task}
+      body:task
     })
   })
   

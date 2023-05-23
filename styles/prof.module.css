@@ -39,6 +39,9 @@
     right: 10px;
     bottom: 5px;
 }
+.pen{
+    cursor: pointer;
+}
 .inright{
     background-color: rgb(210, 227, 232);
     display: flex;
