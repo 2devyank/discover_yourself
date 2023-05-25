@@ -8,6 +8,7 @@ import port from "../../../public/portfolio.png"
 import lay from "../../../public/layers.png"
 import imgback from "../../../public/imgback.jpg"
 import { usePosteprojectMutation } from '@/features/Project'
+import { useRouter } from 'next/router'
 
 const top100Films = [
   
@@ -85,6 +86,8 @@ const top100Films = [
 
 ]
 export default function projects() {
+  const router=useRouter();
+
   const titleRef=useRef<HTMLInputElement>(null);
 const deployRef=useRef<HTMLInputElement>(null);
 const sourceRef=useRef<HTMLInputElement>(null);
@@ -105,6 +108,7 @@ const handleproject=async(e:React.FormEvent)=>{
   }
   console.log(pro)
   await Addproject(pro);
+  router.push("/profile/profile")
   }
   return (
     <div className={styles.alledit}>

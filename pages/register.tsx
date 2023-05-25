@@ -3,7 +3,7 @@ import React, { MouseEventHandler, useRef, useState } from 'react'
 import styles from "../styles/Register.module.css";
 import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
 
-import { Practice } from './components/Practice';
+
 import Link from 'next/link';
 import { useAddauthMutation } from '@/features/Register';
 
@@ -73,7 +73,7 @@ export default function register() {
           </div>
           <Button  type="submit" variant="outlined">Sign Up</Button>
     </Box>
-    <Practice/>
+    {/* <Practice/> */}
           </section>
   )
 }

@@ -13,8 +13,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { usePostexpsMutation } from '@/features/Experience'
+import { useRouter } from 'next/router'
 
 export default function experience() {
+  const router=useRouter();
 const [Addexp,result]=usePostexpsMutation();
 
   const [valuestart, setvaluestart] = React.useState<Dayjs | null>(null);
@@ -31,12 +33,12 @@ const pro={
   organization:organizationref.current?.value,
   role:roleref.current?.value,
   start:valuestart?.toString().slice(4,16),
-  end:valueend?.toString().slice(4,16),
+  last:valueend?.toString().slice(4,16),
 
 }
 console.log(pro);
 await Addexp(pro);
-
+router.push("/profile/profile")
 }
 
 

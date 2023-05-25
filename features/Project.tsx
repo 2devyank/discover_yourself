@@ -19,14 +19,15 @@ export const projectApi=createApi({
         query:(exp)=>({
             url:"/project",
             method:"POST",
-            body:{exp}
+            headers:{"Authorization":`Bearer ${token}`},
+            body:exp
         })
        }),
        putproject:builder.mutation({
         query:({id,...exp})=>({
             url:`/project/${id}`,
             method:"PUT",
-            body:{exp}
+            body:exp
         })
        }),
        deleteproject:builder.mutation({
