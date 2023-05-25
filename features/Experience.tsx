@@ -19,14 +19,15 @@ export const expApi=createApi({
         query:(exp)=>({
             url:"/exp",
             method:"POST",
-            body:{exp}
+            headers:{"Authorization":`Bearer ${token}`},
+            body:exp
         })
        }),
        putexp:builder.mutation({
         query:({id,...exp})=>({
             url:`/exp/${id}`,
             method:"PUT",
-            body:{exp}
+            body:exp
         })
        }),
        deleteexp:builder.mutation({

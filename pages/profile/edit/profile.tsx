@@ -254,44 +254,94 @@ router.push("/profile/profile");
         />
        
         </div>
-        <Autocomplete
-        multiple
-        id="tags-outlined"
-      
-        options={top100Films}
-        getOptionLabel={(option) => option}
-        defaultValue={data?.skills}
-        filterSelectedOptions
-        onChange={(e,v)=>{
-          setskillRef(v);
-        }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Add skills"
-            placeholder="Skills"
+        {
+          data.skills ?(
+            <Autocomplete
+            multiple
+            id="tags-outlined"
+          
+            options={top100Films}
+            getOptionLabel={(option) => option}
+            defaultValue={data?.skills}
+            filterSelectedOptions
+            onChange={(e,v)=>{
+              setskillRef(v);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Add skills"
+                placeholder="Skills"
+              />
+            )}
           />
-        )}
-      />
-        <Autocomplete
-        multiple
-        id="tags-outlined"
-      
-        options={availablelist}
-        getOptionLabel={(option) => option}
-        defaultValue={data?.available}
-        filterSelectedOptions
-        onChange={(e,v)=>{
-          setavailableRef(v)
-        }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Availability"
-            placeholder="Availability"
+          ):(
+            <Autocomplete
+            multiple
+            id="tags-outlined"
+          
+            options={top100Films}
+            getOptionLabel={(option) => option}
+            // defaultValue={data?.skills}
+            filterSelectedOptions
+            onChange={(e,v)=>{
+              setskillRef(v);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Add skills"
+                placeholder="Skills"
+              />
+            )}
           />
-        )}
-      />
+          )
+        }
+      
+      {
+        data?.available ?(
+          <Autocomplete
+          multiple
+          id="tags-outlined"
+        
+          options={availablelist}
+          getOptionLabel={(option) => option}
+          defaultValue={data?.available}
+          filterSelectedOptions
+          onChange={(e,v)=>{
+            setavailableRef(v)
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Availability"
+              placeholder="Availability"
+            />
+          )}
+        />
+        ):(
+          <Autocomplete
+          multiple
+          id="tags-outlined"
+        
+          options={availablelist}
+          getOptionLabel={(option) => option}
+          // defaultValue=
+          filterSelectedOptions
+          onChange={(e,v)=>{
+            setavailableRef(v)
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Availability"
+              placeholder="Availability"
+            />
+          )}
+        />
+        )
+      }
+       
         <TextField
         className={styles.field}
         inputRef={aboutRef}
@@ -299,7 +349,7 @@ router.push("/profile/profile");
           label="About YourSelf"
           multiline
           rows={4}
-          defaultValue="yh"
+          defaultValue={data.about}
         />
         <Button type="submit">Submit</Button>
         </Box>

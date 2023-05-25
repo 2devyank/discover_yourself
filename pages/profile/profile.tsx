@@ -24,6 +24,11 @@ export default function profile() {
   const handleupdateprofile=()=>{
 router.push("/profile/edit/profile")
   }
+
+  const handleaddexp=()=>{
+    router.push("/profile/edit/experience")
+      }
+
   interface ChipData {
     key: number;
     label: string;
@@ -101,7 +106,7 @@ console.log(data?.email);
               }}
               component="ul"
             >
-              {data.skills.map((data,i) => {
+              {data.skills && data.skills.map((data,i) => {
                 let icon;
                 return (
                   <ListItem key={i}>
@@ -137,7 +142,7 @@ console.log(data?.email);
               }}
               component="ul"
             >
-              {data.available.map((data,i) => {
+              {data.available && data.available.map((data,i) => {
                 let icon;
                 return (
                   <ListItem key={i}>
@@ -171,7 +176,7 @@ console.log(data?.email);
   <div className={styles.apart}>
   <span>Experience</span>
 <div className={styles.icon}>
-<AddIcon/>
+<AddIcon onClick={handleaddexp} className={styles.pen}/>
 <ModeEditIcon/>
 </div>
   </div>

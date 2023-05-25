@@ -105,7 +105,7 @@ await Addexp(pro);
         </div>
         <div className={styles.rightbar}>
           <div className={styles.inrightbar}>
-            <span className={styles.head}>Project</span>
+            <span className={styles.head}>Experience</span>
             <span>Manage your work experience here</span>
             <Box
       component="form"
