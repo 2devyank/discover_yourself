@@ -17,10 +17,16 @@ export const projectApi=createApi({
         baseUrl:"http://localhost:8080/"
     }),
     endpoints:(builder)=>({
-       project: builder.query<output,void>({
+       project: builder.query<output[],void>({
         query:()=>({
             url:"/project",
             headers:{"Authorization":`Bearer ${token}`}
+        })
+       }),
+       projectbyid: builder.query<output,void>({
+        query:(id)=>({
+            url:`/project/${id}`,
+           
         })
        }),
        posteproject:builder.mutation({
@@ -47,4 +53,4 @@ export const projectApi=createApi({
     })
 })
 
- export const {usePutprojectMutation,useDeleteprojectMutation,usePosteprojectMutation,useProjectQuery}=projectApi;
+ export const {usePutprojectMutation,useDeleteprojectMutation,usePosteprojectMutation,useProjectQuery,useProjectbyidQuery}=projectApi;

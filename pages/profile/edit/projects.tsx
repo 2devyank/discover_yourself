@@ -7,7 +7,7 @@ import prof from "../../../public/profile.png"
 import port from "../../../public/portfolio.png"
 import lay from "../../../public/layers.png"
 import imgback from "../../../public/imgback.jpg"
-import { usePosteprojectMutation } from '@/features/Project'
+import { usePosteprojectMutation, useProjectbyidQuery } from '@/features/Project'
 import { useRouter } from 'next/router'
 
 const top100Films = [
@@ -103,14 +103,27 @@ const handleproject=async(e:React.FormEvent)=>{
     source:sourceRef.current?.value,
     deploy:deployRef.current?.value,
     description:desRef.current?.value,
-    skills:tagRef
+    tags:tagRef
   
   }
   console.log(pro)
   await Addproject(pro);
   router.push("/profile/profile")
   }
+  // const router=useRouter();
+  console.log(router.query.id);
+  const id=router.query.id;
+    const {data:pdata,error:perror,isLoading:pisLoading,isSuccess:pisSuccess}=useProjectbyidQuery(id as void);
+console.log(pdata);
+
   return (
+    <>
+    
+    <div>
+    {perror && <p>An error occured</p>}
+  {pisLoading  && <p>Loading...</p>}
+    </div>
+    {pisSuccess && (
     <div className={styles.alledit}>
        <div>
         <div className={styles.backimg} >
@@ -189,7 +202,8 @@ const handleproject=async(e:React.FormEvent)=>{
       id="outlined-required"
       inputRef={titleRef}
       label="Title"
-      defaultValue=" "
+      defaultValue={pdata?.title}
+      // defaultValue="title"
       placeholder='Enter Title'
     />
      <TextField
@@ -198,7 +212,7 @@ const handleproject=async(e:React.FormEvent)=>{
       id="outlined-required"
       label="Source Link"
       inputRef={sourceRef}
-      defaultValue=" "
+      defaultValue={pdata.source}
       placeholder='Enter Source Link'
     />
     </div>
@@ -209,28 +223,32 @@ const handleproject=async(e:React.FormEvent)=>{
       id="outlined-required"
       label="Deploy Link"
       inputRef={deployRef}
-      defaultValue=" "
+      defaultValue={pdata.deploy}
       placeholder='Enter Deploy Link'
     />
     
     </div>
+    {
+      pdata.tags &&
     <Autocomplete
-        multiple
-        id="tags-outlined"
-        options={top100Films}
-        getOptionLabel={(option) => option}
-        onChange={(e,v)=>{
-          settagRef(v);
-        }}
-        filterSelectedOptions
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Add Tags"
-            placeholder="Tags"
-          />
-        )}
+    multiple
+    id="tags-outlined"
+    options={top100Films}
+    getOptionLabel={(option) => option}
+    onChange={(e,v)=>{
+      settagRef(v);
+    }}
+    filterSelectedOptions
+    defaultValue={pdata.tags}
+    renderInput={(params) => (
+      <TextField
+      {...params}
+      label="Add Tags"
+      placeholder="Tags"
       />
+      )}
+      />
+    }
     <TextField
     className={styles.field}
       id="outlined-multiline-static"
@@ -238,7 +256,7 @@ const handleproject=async(e:React.FormEvent)=>{
       inputRef={desRef}
       multiline
       rows={4}
-      defaultValue=" "
+      defaultValue={pdata.description}
     />
     <Button type='submit'>Submit</Button>
   
@@ -247,5 +265,7 @@ const handleproject=async(e:React.FormEvent)=>{
     </div>
 </div>
 </div>
+    )}
+    </>
   )
 }

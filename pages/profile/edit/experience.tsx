@@ -12,7 +12,7 @@ import imgback from "../../../public/imgback.jpg"
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { usePostexpsMutation } from '@/features/Experience'
+import { useExpsbyidQuery, usePostexpsMutation } from '@/features/Experience'
 import { useRouter } from 'next/router'
 
 export default function experience() {
@@ -25,6 +25,8 @@ const [Addexp,result]=usePostexpsMutation();
 const postionref=useRef<HTMLInputElement>();
 const roleref=useRef<HTMLInputElement>();
 const organizationref=useRef<HTMLInputElement>();
+
+const {data:edata,error:eerror,isLoading:eisLoading,isSuccess:eisSuccess}=useExpsbyidQuery()
 
 const handleexp=async(e:React.FormEvent)=>{
 e.preventDefault();
@@ -45,6 +47,14 @@ router.push("/profile/profile")
   console.log(valuestart?.toString().slice(0,16));
   console.log(valuestart);
   return (
+    <>
+    
+    <div>
+    { eerror && <p>An error occured</p>}
+  { eisLoading  && <p>Loading...</p>}
+    </div>
+    { eisSuccess && (
+
     <div className={styles.alledit}>
         <div>
         <div className={styles.backimg} >
@@ -123,7 +133,7 @@ router.push("/profile/profile")
           required
           id="outlined-required"
           label="Job Title"
-          defaultValue=" "
+          defaultValue={edata.position}
           placeholder='Enter Job Title'
         />
          <TextField
@@ -132,7 +142,7 @@ router.push("/profile/profile")
           inputRef={organizationref}
           id="outlined-required"
           label="Company name"
-          defaultValue=" "
+          defaultValue={edata.organization}
           placeholder='Enter Company name'
         />
         </div>
@@ -156,7 +166,7 @@ router.push("/profile/profile")
         <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
         label="start date"
-        
+        // defaultValue={edata.start}
         value={valuestart}
         onChange={(newValue) => {
           setvaluestart(newValue);
@@ -183,7 +193,7 @@ router.push("/profile/profile")
           inputRef={roleref}
           multiline
           rows={4}
-          defaultValue=" "
+          defaultValue={edata.role}
         />
         <Button type='submit'>Submit</Button>
         </Box>
@@ -191,5 +201,7 @@ router.push("/profile/profile")
         </div>
     </div>
     </div>
+    )}
+    </>
   )
 }

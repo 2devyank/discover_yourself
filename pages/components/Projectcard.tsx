@@ -4,15 +4,29 @@ import Image from 'next/image';
 import styles from "../../styles/pcard.module.css"
 import porject from "../../public/project.jpg"
 import { Button, Menu, MenuItem } from '@mui/material';
+import { useRouter } from 'next/router';
 
 
-export default function Projectcard() {
+interface output{
+  userid:number,
+  title:string,
+  description:string,
+  source:string,
+  tags:string[],
+  deploy:string,
+ projectid:number
+}
+export default function Projectcard({data}:{data:output}) {
+const router=useRouter();
+ 
+console.log(data);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
   setAnchorEl(event.currentTarget);
 };
 const handleClose = () => {
+  router.push(`/profile/edit/projects?id=${data.projectid}`)
   setAnchorEl(null);
 };
     const skilarr=["java","js","xhtml"];
@@ -20,7 +34,7 @@ const handleClose = () => {
     <div className={styles.pcard}>
         <div className={styles.phead}>
             
-        <span>Project Name</span>
+        <span>{data.title}</span>
         <span
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
@@ -29,7 +43,7 @@ const handleClose = () => {
         onClick={handleClick}
         className={styles.dots}
       >
-<MoreVertIcon/>
+<MoreVertIcon />
       </span>
         </div>
         <div className={styles.pimgcon}>
@@ -43,8 +57,8 @@ alt="asdf"
 />
 </div>
 <div className={styles.skillcontext}>
-{
-  skilarr.map((val,index)=>(
+{data.tags &&
+  data.tags.map((val,index)=>(
       <span key={index} className={styles.skillb}>{val}</span>
       ))
 }

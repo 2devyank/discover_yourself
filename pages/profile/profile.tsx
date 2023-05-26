@@ -20,6 +20,8 @@ import { useUsersQuery } from '@/features/Register';
 import { useRouter } from 'next/router';
 import Projectcard from '../components/Projectcard';
 import { useProjectQuery } from '@/features/Project';
+import { useExpsQuery } from '@/features/Experience';
+// import { useProjectQuery } from '@/features/Project';
 
 export default function profile() {
   const router=useRouter();
@@ -56,9 +58,11 @@ router.push("/profile/edit/profile")
 const {data,error,isLoading,isSuccess}=useUsersQuery();
 // const pa=useProjectQuery().data;
 
-const {data:asdf,error:perror,isLoading:pisLoading,isSuccess:pisSuccess}=useProjectQuery()
-// console.log(error);
-console.log(asdf);
+const {data:pdata,error:perror,isLoading:pisLoading,isSuccess:pisSuccess}=useProjectQuery()
+const {data:edata,error:eerror,isLoading:eisLoading,isSuccess:eisSuccess}=useExpsQuery()
+// const {data:pdata}=useProjectQuery();
+console.log(pdata);
+// console.log(asdf);
 console.log(data);
 const s=data?.id;
 typeof window !== 'undefined' ? localStorage.setItem("userid",s as unknown as string) : null
@@ -68,10 +72,10 @@ console.log(data?.email);
     <>
     
     <div>
-    {error && <p>An error occured</p>}
-  {isLoading && <p>Loading...</p>}
+    {error && perror && eerror && <p>An error occured</p>}
+  {isLoading && pisLoading && eisLoading  && <p>Loading...</p>}
     </div>
-    {isSuccess && (
+    {isSuccess && eisSuccess && pisSuccess && (
 
    
     <div className={styles.prof}>
@@ -181,6 +185,12 @@ console.log(data?.email);
  {data.about}
   </span>
   </div>
+
+
+{
+edata.map((data,i)=>(
+
+
 <div className={styles.experience}>
   <div className={styles.apart}>
   <span>Experience</span>
@@ -197,7 +207,7 @@ console.log(data?.email);
               alt="skills"
             /></div>
     <div className={styles.content}>
-      <span className={styles.position}>profile</span>
+      <span className={styles.position}>{data.position}</span>
     <div className={styles.time}>
       
         <Image
@@ -205,7 +215,7 @@ console.log(data?.email);
               width={15}
               height={15}
               alt="skills"
-            /><span>Organization</span>
+            /><span>{data.organization}</span>
       </div>
      <div className={styles.time}>
      <Image
@@ -213,12 +223,15 @@ console.log(data?.email);
               width={15}
               height={15}
               alt="skills"
-            /><span>Time period</span>
+            /><span>{data.start} - {data.last}</span>
       </div>
-      <span>Role</span>
+      <span>{data.role}</span>
        </div>
   </div>
 </div>
+))
+}
+
 <div className={styles.exp}>
   <div className={styles.projhead}>
 
@@ -227,9 +240,12 @@ console.log(data?.email);
   </div>
   <br />
   <div className={styles.pwrap}>
-  <Projectcard/>
-  <Projectcard/>
-  <Projectcard/>
+    {
+      pdata.map((data,i)=>(
+        <Projectcard key={i}  data={data}/>
+      ))
+    }
+  
   </div>
 </div>
         </div>

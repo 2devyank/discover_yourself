@@ -6,9 +6,11 @@ import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
 
 import Link from 'next/link';
 import { useAddauthMutation } from '@/features/Register';
+import { useRouter } from 'next/router';
 
 
 export default function register() {
+  const router=useRouter();
   // const [addTask,result]=useAddTaskMutation();
   const [Addauth,result]=useAddauthMutation();
   
@@ -25,7 +27,7 @@ export default function register() {
     };
     console.log(task);
     await Addauth(task);
-   
+   router.push("/login");
   }
   
   return (

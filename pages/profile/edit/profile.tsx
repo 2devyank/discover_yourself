@@ -115,7 +115,7 @@ const task={
   name:nameRef.current?.value,
   email:emailRef.current?.value,
   portfoilo:portRef.current?.value,
-  experience:expRef.current?.value,
+  expertise:expRef.current?.value,
   about:aboutRef.current?.value,
   skills:skillRef,
   available:availableRef,

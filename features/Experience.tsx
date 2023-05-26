@@ -1,6 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-
+interface output{
+    userid:number,
+    position:string,
+    organization:string,
+    role:string,
+    start:string[],
+    last:string,
+   expid:number
+  }
 const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
 export const expApi=createApi({
@@ -9,10 +17,16 @@ export const expApi=createApi({
         baseUrl:"http://localhost:8080/"
     }),
     endpoints:(builder)=>({
-       exps: builder.query({
+       exps: builder.query<output[],void>({
         query:()=>({
             url:"/exp",
             headers:{"Authorization":`Bearer ${token}`}
+        })
+       }),
+       expsbyid: builder.query<output,void>({
+        query:()=>({
+            url:"/exp/:id",
+          
         })
        }),
        postexps:builder.mutation({
@@ -39,4 +53,4 @@ export const expApi=createApi({
     })
 })
 
-export const {useExpsQuery,usePostexpsMutation,useDeleteexpMutation,usePutexpMutation}=expApi;
+export const {useExpsQuery,usePostexpsMutation,useDeleteexpMutation,usePutexpMutation,useExpsbyidQuery}=expApi;
