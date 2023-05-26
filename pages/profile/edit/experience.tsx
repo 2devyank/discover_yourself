@@ -12,7 +12,7 @@ import imgback from "../../../public/imgback.jpg"
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useExpsbyidQuery, usePostexpsMutation } from '@/features/Experience'
+import { useExpsbyidQuery, usePostexpsMutation, usePutexpMutation } from '@/features/Experience'
 import { useRouter } from 'next/router'
 
 export default function experience() {
@@ -25,7 +25,7 @@ const [Addexp,result]=usePostexpsMutation();
 const postionref=useRef<HTMLInputElement>();
 const roleref=useRef<HTMLInputElement>();
 const organizationref=useRef<HTMLInputElement>();
-
+const id=router.query.id;
 const {data:edata,error:eerror,isLoading:eisLoading,isSuccess:eisSuccess}=useExpsbyidQuery()
 
 const handleexp=async(e:React.FormEvent)=>{
@@ -42,7 +42,27 @@ console.log(pro);
 await Addexp(pro);
 router.push("/profile/profile")
 }
-
+// const {data:pdata,error:perror,isLoading:pisLoading,isSuccess:pisSuccess}=useExpsbyidQuery(id as void);
+const [updateexp]=usePutexpMutation();
+const handlexpupdate=async(e:React.FormEvent)=>{
+  e.preventDefault();
+  
+    const pro={
+      position:postionref.current?.value,
+      organization:organizationref.current?.value,
+      role:roleref.current?.value,
+      start:valuestart?.toString().slice(4,16),
+      last:valueend?.toString().slice(4,16),
+      id
+    
+    }
+  
+  console.log(pro)
+  updateexp(pro);
+  router.push("/profile/profile");
+  
+  // await  
+  }
 
   console.log(valuestart?.toString().slice(0,16));
   console.log(valuestart);
@@ -195,7 +215,18 @@ router.push("/profile/profile")
           rows={4}
           defaultValue={edata.role}
         />
-        <Button type='submit'>Submit</Button>
+        {/* <Button type='submit'>Submit</Button> */}
+        {id ?(
+      <>
+ <button type='submit' className={styles.conren}>Submit</button>
+ <Button type='submit'>Edit</Button>
+      </>
+    ):(
+      <>
+      <Button type='submit'>Submit</Button>
+      <Button type='submit' className={styles.conren}>Edit</Button>
+      </>
+    )}
         </Box>
           </div>
         </div>

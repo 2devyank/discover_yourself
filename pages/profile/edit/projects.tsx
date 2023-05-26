@@ -7,7 +7,7 @@ import prof from "../../../public/profile.png"
 import port from "../../../public/portfolio.png"
 import lay from "../../../public/layers.png"
 import imgback from "../../../public/imgback.jpg"
-import { usePosteprojectMutation, useProjectbyidQuery } from '@/features/Project'
+import { usePosteprojectMutation, useProjectbyidQuery, usePutprojectMutation } from '@/features/Project'
 import { useRouter } from 'next/router'
 
 const top100Films = [
@@ -115,6 +115,26 @@ const handleproject=async(e:React.FormEvent)=>{
   const id=router.query.id;
     const {data:pdata,error:perror,isLoading:pisLoading,isSuccess:pisSuccess}=useProjectbyidQuery(id as void);
 console.log(pdata);
+const [updateproject]=usePutprojectMutation();
+const handleprojectupdate=async(e:React.FormEvent)=>{
+  e.preventDefault();
+  
+    const pro={
+      title:titleRef.current?.value,
+      source:sourceRef.current?.value,
+      deploy:deployRef.current?.value,
+      description:desRef.current?.value,
+      tags:tagRef,
+      id
+    
+    }
+  
+  console.log(pro)
+  updateproject(pro);
+  router.push("/profile/profile");
+  
+  // await  
+  }
 
   return (
     <>
@@ -191,7 +211,7 @@ console.log(pdata);
         <Box
   component="form"
   className={styles.box}
-  onSubmit={handleproject}
+  onSubmit={id ? handleprojectupdate:handleproject}
   noValidate
   autoComplete="off"
 >
@@ -258,7 +278,18 @@ console.log(pdata);
       rows={4}
       defaultValue={pdata.description}
     />
-    <Button type='submit'>Submit</Button>
+    {id ?(
+      <>
+ <button type='submit' className={styles.conren}>Submit</button>
+ <Button type='submit'>Edit</Button>
+      </>
+    ):(
+      <>
+      <Button type='submit'>Submit</Button>
+      <Button type='submit' className={styles.conren}>Edit</Button>
+      </>
+    )}
+   
   
     </Box>
       </div>

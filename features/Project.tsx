@@ -26,7 +26,6 @@ export const projectApi=createApi({
        projectbyid: builder.query<output,void>({
         query:(id)=>({
             url:`/project/${id}`,
-           
         })
        }),
        posteproject:builder.mutation({
@@ -41,6 +40,7 @@ export const projectApi=createApi({
         query:({id,...exp})=>({
             url:`/project/${id}`,
             method:"PUT",
+            headers:{"Authorization":`Bearer ${token}`},
             body:exp
         })
        }),

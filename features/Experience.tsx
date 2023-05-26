@@ -24,8 +24,8 @@ export const expApi=createApi({
         })
        }),
        expsbyid: builder.query<output,void>({
-        query:()=>({
-            url:"/exp/:id",
+        query:(id)=>({
+            url:`/exp/${id}`,
           
         })
        }),
@@ -41,6 +41,7 @@ export const expApi=createApi({
         query:({id,...exp})=>({
             url:`/exp/${id}`,
             method:"PUT",
+            headers:{"Authorization":`Bearer ${token}`},
             body:exp
         })
        }),
