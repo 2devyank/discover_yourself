@@ -92,6 +92,24 @@
 .position{
     font-weight: 600;
 }
+.exp{
+    padding: 15px 10px;
+    background-color: whitesmoke;
+  
+}
+.exp span{
+    font-size: 20px;
+    font-weight: 600;
+}
+.projhead{
+    display: flex;
+    justify-content: space-between;
+}
+.pwrap{
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
 @media(max-width:800px){
     .prof{
         display: block;

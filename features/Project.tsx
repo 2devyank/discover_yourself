@@ -1,6 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-
+interface output{
+    userid:number,
+    title:string,
+    description:string,
+    source:string,
+    tags:string[],
+    deploy:string,
+   projectid:number
+  }
 const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
 export const projectApi=createApi({
@@ -9,7 +17,7 @@ export const projectApi=createApi({
         baseUrl:"http://localhost:8080/"
     }),
     endpoints:(builder)=>({
-       project: builder.query({
+       project: builder.query<output,void>({
         query:()=>({
             url:"/project",
             headers:{"Authorization":`Bearer ${token}`}

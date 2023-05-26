@@ -18,6 +18,8 @@ import AddIcon from '@mui/icons-material/Add';
 import TodayIcon from '@mui/icons-material/Today';
 import { useUsersQuery } from '@/features/Register';
 import { useRouter } from 'next/router';
+import Projectcard from '../components/Projectcard';
+import { useProjectQuery } from '@/features/Project';
 
 export default function profile() {
   const router=useRouter();
@@ -28,6 +30,9 @@ router.push("/profile/edit/profile")
   const handleaddexp=()=>{
     router.push("/profile/edit/experience")
       }
+      const handleaddproject=()=>{
+        router.push("/profile/edit/projects")
+          }
 
   interface ChipData {
     key: number;
@@ -49,7 +54,11 @@ router.push("/profile/edit/profile")
   ]);
 
 const {data,error,isLoading,isSuccess}=useUsersQuery();
+// const pa=useProjectQuery().data;
+
+const {data:asdf,error:perror,isLoading:pisLoading,isSuccess:pisSuccess}=useProjectQuery()
 // console.log(error);
+console.log(asdf);
 console.log(data);
 const s=data?.id;
 typeof window !== 'undefined' ? localStorage.setItem("userid",s as unknown as string) : null
@@ -211,7 +220,17 @@ console.log(data?.email);
   </div>
 </div>
 <div className={styles.exp}>
-  
+  <div className={styles.projhead}>
+
+  <span>Projects</span>
+  <AddIcon onClick={handleaddproject} className={styles.pen}/>
+  </div>
+  <br />
+  <div className={styles.pwrap}>
+  <Projectcard/>
+  <Projectcard/>
+  <Projectcard/>
+  </div>
 </div>
         </div>
       </div>
