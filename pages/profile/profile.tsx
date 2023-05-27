@@ -36,24 +36,15 @@ router.push("/profile/edit/profile")
         router.push("/profile/edit/projects")
           }
 
-  interface ChipData {
-    key: number;
-    label: string;
-  }
+
 
   const ListItem = styled('li')(({ theme }) => ({
     margin: theme.spacing(0.5),
   }));
 
 
-  const [chipData, setChipData] = React.useState<readonly ChipData[]>([
-    { key: 0, label: 'Angular' },
-    { key: 1, label: 'jQuery' },
-    { key: 2, label: 'Polymer' },
-    { key: 3, label: 'React' },
-    { key: 4, label: 'Vue.js' },
-    { key: 4, label: 'Vue.js' },
-  ]);
+  
+ 
 
 const {data,error,isLoading,isSuccess}=useUsersQuery();
 // const pa=useProjectQuery().data;
@@ -176,7 +167,7 @@ console.log(data?.email);
       <div className={styles.rightprof}>
         <div className={styles.inright}>
 <div className={styles.about}>
-  <div className={styles.apart}>
+  <div className={styles.aparthead}>
 
   <span>About me</span>
   <ModeEditIcon className={styles.pen}  onClick={handleupdateprofile}/>
@@ -186,26 +177,33 @@ console.log(data?.email);
   </span>
   </div>
 
+  <div className={styles.experience}>
+  <div className={styles.aparthead}>
+  <span>Experience</span>
+<div className={styles.icon}>
+<AddIcon onClick={handleaddexp} className={styles.pen}/>
+{/* <ModeEditIcon/> */}
+</div>
+  </div>
 
 {
 edata.map((data,i)=>(
 
+<>
 
-<div className={styles.experience}>
   <div className={styles.apart}>
-  <span>Experience</span>
-<div className={styles.icon}>
-<AddIcon onClick={handleaddexp} className={styles.pen}/>
-<ModeEditIcon/>
-</div>
-  </div>
+ <div>
+<ModeEditIcon onClick={()=>router.push(`/profile/edit/experience?id=${data.expid}`)} className={styles.pencil}/>
+ </div>
+
+  
   <div className={styles.expdata}>
     <div>  <Image
               src={office}
               width={100}
               height={100}
               alt="skills"
-            /></div>
+              /></div>
     <div className={styles.content}>
       <span className={styles.position}>{data.position}</span>
     <div className={styles.time}>
@@ -215,7 +213,7 @@ edata.map((data,i)=>(
               width={15}
               height={15}
               alt="skills"
-            /><span>{data.organization}</span>
+              /><span>{data.organization}</span>
       </div>
      <div className={styles.time}>
      <Image
@@ -223,14 +221,16 @@ edata.map((data,i)=>(
               width={15}
               height={15}
               alt="skills"
-            /><span>{data.start} - {data.last}</span>
+              /><span>{data.start} - {data.last}</span>
       </div>
       <span>{data.role}</span>
        </div>
   </div>
-</div>
+  </div>
+</>
 ))
 }
+</div>
 
 <div className={styles.exp}>
   <div className={styles.projhead}>

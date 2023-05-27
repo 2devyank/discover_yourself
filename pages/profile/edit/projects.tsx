@@ -83,10 +83,12 @@ const top100Films = [
   'Typescript' ,
   'Tailwind CSS' ,
   'Vue' 
-
+  
 ]
 export default function projects() {
   const router=useRouter();
+  console.log(router.query.id);
+  const id=router.query.id;
 
   const titleRef=useRef<HTMLInputElement>(null);
 const deployRef=useRef<HTMLInputElement>(null);
@@ -111,39 +113,198 @@ const handleproject=async(e:React.FormEvent)=>{
   router.push("/profile/profile")
   }
   // const router=useRouter();
-  console.log(router.query.id);
-  const id=router.query.id;
-    const {data:pdata,error:perror,isLoading:pisLoading,isSuccess:pisSuccess}=useProjectbyidQuery(id as void);
-console.log(pdata);
-const [updateproject]=usePutprojectMutation();
-const handleprojectupdate=async(e:React.FormEvent)=>{
-  e.preventDefault();
-  
-    const pro={
-      title:titleRef.current?.value,
-      source:sourceRef.current?.value,
-      deploy:deployRef.current?.value,
-      description:desRef.current?.value,
-      tags:tagRef,
-      id
+  const {data:pdata,error:perror,isLoading:pisLoading,isSuccess:pisSuccess}=useProjectbyidQuery(id as unknown as void);
+  const [updateproject]=usePutprojectMutation();
+  const handleprojectupdate=async(e:React.FormEvent)=>{
+    e.preventDefault();
     
+      const pro={
+        title:titleRef.current?.value,
+        source:sourceRef.current?.value,
+        deploy:deployRef.current?.value,
+        description:desRef.current?.value,
+        tags:tagRef,
+        id
+      
+      }
+    
+    console.log(pro)
+    updateproject(pro);
+    router.push("/profile/profile");
+    
+    // await  
     }
+  if(id){
+ return(
+  <>
+    
+  <div>
+  {perror && <p>An error occured</p>}
+{pisLoading  && <p>Loading...</p>}
+  </div>
+  {pisSuccess && (
+  <div className={styles.alledit}>
+     <div>
+      <div className={styles.backimg} >
+
+      <Image src={imgback}
+     height='300'
+     width='1250'
+      alt='alt'/>
+     <h2 className={styles.edithead}>
+       EDIT PROJECTS
+      </h2>
+      </div>
+    </div>
+  <div className={styles.down}>
+  <div className={styles.leftbar}>
+      <div className={styles.inleft}>
   
-  console.log(pro)
-  updateproject(pro);
-  router.push("/profile/profile");
+       <Link className={styles.leftnav} href="/profile/edit/profile">
+   <Image
+        src={prof}
+        width={20}
+        height={20}
+        alt="skills"
+      />
+      <span className={styles.single}>
+          Profile
+        </span>
+        </Link>
+     
+    
+      <Link  className={styles.leftnav} href="/profile/edit/experience">
+      <Image
+        src={port}
+        width={20}
+        height={20}
+        alt="skills"
+      />
+      <span className={styles.single}>
+
+        Experience
+      </span>
+        </Link>
+      
+      
+      <Link className={styles.leftnav} href="/profile/edit/projects">
+      <Image
+        src={lay}
+        width={20}
+        height={20}
+        alt="skills"
+      />
+      <span className={styles.single}>
+
+        Project
+      </span>
+        </Link>
+      
+    
+      </div>
+  </div>
+  <div className={styles.rightbar}>
+    <div className={styles.inrightbar}>
+      <span className={styles.head}>Project</span>
+      <span>Manage your work experience here</span>
+      <Box
+component="form"
+className={styles.box}
+onSubmit={handleprojectupdate}
+noValidate
+autoComplete="off"
+>
+<div className={styles.inbox}>
+  <TextField
+  className={styles.field}
+    required
+    id="outlined-required"
+    inputRef={titleRef}
+    label="Title"
+    defaultValue={pdata?.title}
+    // defaultValue="title"
+    placeholder='Enter Title'
+  />
+   <TextField
+  className={styles.field}
+    required
+    id="outlined-required"
+    label="Source Link"
+    inputRef={sourceRef}
+    defaultValue={pdata.source}
+    placeholder='Enter Source Link'
+  />
+  </div>
+  <div className={styles.inbox}>
+  <TextField
+  className={styles.field}
+    required
+    id="outlined-required"
+    label="Deploy Link"
+    inputRef={deployRef}
+    defaultValue={pdata.deploy}
+    placeholder='Enter Deploy Link'
+  />
   
-  // await  
+  </div>
+  {
+    pdata.tags &&
+  <Autocomplete
+  multiple
+  id="tags-outlined"
+  options={top100Films}
+  getOptionLabel={(option) => option}
+  onChange={(e,v)=>{
+    settagRef(v);
+  }}
+  filterSelectedOptions
+  defaultValue={pdata.tags}
+  renderInput={(params) => (
+    <TextField
+    {...params}
+    label="Add Tags"
+    placeholder="Tags"
+    />
+    )}
+    />
+  }
+  <TextField
+  className={styles.field}
+    id="outlined-multiline-static"
+    label="About Project"
+    inputRef={desRef}
+    multiline
+    rows={4}
+    defaultValue={pdata.description}
+  />
+  
+    
+<Button type='submit' className={styles.conren}>Submit</Button>
+<Button type='submit'>Edit</Button>
+    
+ 
+
+  </Box>
+    </div>
+  </div>
+</div>
+</div>
+  )}
+  </>
+ )
+ 
+ 
+ 
+ 
+ 
+ 
   }
 
+
+
   return (
-    <>
-    
-    <div>
-    {perror && <p>An error occured</p>}
-  {pisLoading  && <p>Loading...</p>}
-    </div>
-    {pisSuccess && (
+
+   
     <div className={styles.alledit}>
        <div>
         <div className={styles.backimg} >
@@ -211,7 +372,7 @@ const handleprojectupdate=async(e:React.FormEvent)=>{
         <Box
   component="form"
   className={styles.box}
-  onSubmit={id ? handleprojectupdate:handleproject}
+  onSubmit={handleproject}
   noValidate
   autoComplete="off"
 >
@@ -222,7 +383,7 @@ const handleprojectupdate=async(e:React.FormEvent)=>{
       id="outlined-required"
       inputRef={titleRef}
       label="Title"
-      defaultValue={pdata?.title}
+      // defaultValue={pdata?.title}
       // defaultValue="title"
       placeholder='Enter Title'
     />
@@ -232,7 +393,7 @@ const handleprojectupdate=async(e:React.FormEvent)=>{
       id="outlined-required"
       label="Source Link"
       inputRef={sourceRef}
-      defaultValue={pdata.source}
+      // defaultValue={pdata.source}
       placeholder='Enter Source Link'
     />
     </div>
@@ -243,13 +404,13 @@ const handleprojectupdate=async(e:React.FormEvent)=>{
       id="outlined-required"
       label="Deploy Link"
       inputRef={deployRef}
-      defaultValue={pdata.deploy}
+      // defaultValue={pdata.deploy}
       placeholder='Enter Deploy Link'
     />
     
     </div>
-    {
-      pdata.tags &&
+  
+     
     <Autocomplete
     multiple
     id="tags-outlined"
@@ -259,7 +420,7 @@ const handleprojectupdate=async(e:React.FormEvent)=>{
       settagRef(v);
     }}
     filterSelectedOptions
-    defaultValue={pdata.tags}
+    // defaultValue={pdata.tags}
     renderInput={(params) => (
       <TextField
       {...params}
@@ -268,7 +429,7 @@ const handleprojectupdate=async(e:React.FormEvent)=>{
       />
       )}
       />
-    }
+    
     <TextField
     className={styles.field}
       id="outlined-multiline-static"
@@ -276,19 +437,17 @@ const handleprojectupdate=async(e:React.FormEvent)=>{
       inputRef={desRef}
       multiline
       rows={4}
-      defaultValue={pdata.description}
+      // defaultValue={pdata.description}
     />
-    {id ?(
-      <>
- <button type='submit' className={styles.conren}>Submit</button>
- <Button type='submit'>Edit</Button>
-      </>
-    ):(
-      <>
-      <Button type='submit'>Submit</Button>
-      <Button type='submit' className={styles.conren}>Edit</Button>
-      </>
-    )}
+    
+ <Button type='submit' >Submit</Button>
+ <Button type='submit' className={styles.conren}>Edit</Button>
+      
+    
+      
+     
+      
+  
    
   
     </Box>
@@ -296,7 +455,6 @@ const handleprojectupdate=async(e:React.FormEvent)=>{
     </div>
 </div>
 </div>
-    )}
-    </>
+  
   )
 }

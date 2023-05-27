@@ -26,7 +26,7 @@ const postionref=useRef<HTMLInputElement>();
 const roleref=useRef<HTMLInputElement>();
 const organizationref=useRef<HTMLInputElement>();
 const id=router.query.id;
-const {data:edata,error:eerror,isLoading:eisLoading,isSuccess:eisSuccess}=useExpsbyidQuery()
+const {data:edata,error:eerror,isLoading:eisLoading,isSuccess:eisSuccess}=useExpsbyidQuery(id as void)
 
 const handleexp=async(e:React.FormEvent)=>{
 e.preventDefault();
@@ -63,9 +63,7 @@ const handlexpupdate=async(e:React.FormEvent)=>{
   
   // await  
   }
-
-  console.log(valuestart?.toString().slice(0,16));
-  console.log(valuestart);
+if(id){
   return (
     <>
     
@@ -74,6 +72,166 @@ const handlexpupdate=async(e:React.FormEvent)=>{
   { eisLoading  && <p>Loading...</p>}
     </div>
     { eisSuccess && (
+
+    <div className={styles.alledit}>
+        <div>
+        <div className={styles.backimg} >
+
+        <Image src={imgback}
+       height='300'
+       width='1250'
+        alt='alt'/>
+       <h2 className={styles.edithead}>
+         EDIT EXPERIENCE
+        </h2>
+        </div>
+      </div>
+        <div className={styles.down}>
+        <div className={styles.leftbar}>
+            <div className={styles.inleft}>
+        
+             <Link className={styles.leftnav} href="/profile/edit/profile">
+         <Image
+              src={prof}
+              width={20}
+              height={20}
+              alt="skills"
+            />
+            <span className={styles.single}>
+                Profile
+              </span>
+              </Link>
+           
+          
+            <Link  className={styles.leftnav} href="/profile/edit/experience">
+            <Image
+              src={port}
+              width={20}
+              height={20}
+              alt="skills"
+            />
+            <span className={styles.single}>
+
+              Experience
+            </span>
+              </Link>
+            
+            
+            <Link className={styles.leftnav} href="/profile/edit/projects">
+            <Image
+              src={lay}
+              width={20}
+              height={20}
+              alt="skills"
+            />
+            <span className={styles.single}>
+
+              Project
+            </span>
+              </Link>
+            
+          
+            </div>
+        </div>
+        <div className={styles.rightbar}>
+          <div className={styles.inrightbar}>
+            <span className={styles.head}>Experience</span>
+            <span>Manage your work experience here</span>
+            <Box
+      component="form"
+      onSubmit={handlexpupdate}
+      className={styles.box}
+      noValidate
+      autoComplete="off"
+    >
+      <div className={styles.inbox}>
+        <TextField
+        className={styles.field}
+        inputRef={postionref}
+          required
+          id="outlined-required"
+          label="Job Title"
+          defaultValue={edata.position}
+          placeholder='Enter Job Title'
+        />
+         <TextField
+        className={styles.field}
+          required
+          inputRef={organizationref}
+          id="outlined-required"
+          label="Company name"
+          defaultValue={edata.organization}
+          placeholder='Enter Company name'
+        />
+        </div>
+        <div className={styles.inbox}>
+        {/* <TextField
+        className={styles.field}
+          required
+          id="outlined-required"
+          label="Start Date"
+          defaultValue=" "
+          placeholder='Select Start Date'
+        />
+         <TextField
+        className={styles.field}
+          required
+          id="outlined-required"
+          label="End Date"
+          defaultValue=" "
+          placeholder='Select End Date'
+        /> */}
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker
+        label="start date"
+        // defaultValue={edata.start}
+        value={valuestart}
+        onChange={(newValue) => {
+          setvaluestart(newValue);
+        }}
+        // renderInput={(params: JSX.IntrinsicAttributes & TextFieldProps) => <TextField {...params} />}
+      />
+    </LocalizationProvider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker
+        label="end date"
+        value={valueend}
+        onChange={(newValue) => {
+          setvalueend(newValue);
+        }}
+        // renderInput={(params: JSX.IntrinsicAttributes & TextFieldProps) => <TextField {...params} />}
+      />
+    </LocalizationProvider>
+        </div>
+       
+        <TextField
+        className={styles.field}
+          id="outlined-multiline-static"
+          label="About Your Role"
+          inputRef={roleref}
+          multiline
+          rows={4}
+          defaultValue={edata.role}
+        />
+        {/* <Button type='submit'>Submit</Button> */}
+      
+ <Button type='submit' className={styles.conren}>Submit</Button>
+ <Button type='submit'>Edit</Button>
+   
+        </Box>
+          </div>
+        </div>
+    </div>
+    </div>
+    )}
+    </>
+  )
+}
+  
+  return (
+   
+    
+    
 
     <div className={styles.alledit}>
         <div>
@@ -153,7 +311,7 @@ const handlexpupdate=async(e:React.FormEvent)=>{
           required
           id="outlined-required"
           label="Job Title"
-          defaultValue={edata.position}
+          // defaultValue={edata.position}
           placeholder='Enter Job Title'
         />
          <TextField
@@ -162,7 +320,7 @@ const handlexpupdate=async(e:React.FormEvent)=>{
           inputRef={organizationref}
           id="outlined-required"
           label="Company name"
-          defaultValue={edata.organization}
+          // defaultValue={edata.organization}
           placeholder='Enter Company name'
         />
         </div>
@@ -213,7 +371,7 @@ const handlexpupdate=async(e:React.FormEvent)=>{
           inputRef={roleref}
           multiline
           rows={4}
-          defaultValue={edata.role}
+          // defaultValue={edata.role}
         />
         {/* <Button type='submit'>Submit</Button> */}
         {id ?(
@@ -232,7 +390,6 @@ const handlexpupdate=async(e:React.FormEvent)=>{
         </div>
     </div>
     </div>
-    )}
-    </>
+  
   )
 }
