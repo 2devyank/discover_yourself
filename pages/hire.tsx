@@ -5,6 +5,7 @@ import select from "../public/select.png"
 import quote from "../public/quote.png"
 import TalentCard from './components/TalentCard'
 import { Autocomplete, Button, TextField } from '@mui/material'
+import { useAddauthMutation, useAllusersQuery } from '@/features/Register'
 
 
 
@@ -82,11 +83,41 @@ const names = [
   'Tailwind CSS' ,
   'Vue' 
 ];
+const availablelist=[
+  'Full Time',
+  'Part Time',
+  'Internship',
+  'Code Colab'
+  ]
+interface output{
+  id:number,
+  name:string,
+  email:string,
+  portfoilo:string,
+  skills:string[],
+  expertise:string,
+  about:string,
+  password:string,
+  img:string,
+  available:string[]
+}
 
 export default function Hire() {
-  
-  const [tech,settech]=useState<string[]>([]);
-  
+const [page,setpage]=useState(0);
+const [tech,settech]=useState<string[]>([]);
+const [available,setavailable]=useState<string[]>([]);
+// const handlefiltercard=(e)=>{
+// e.preventDefault();
+
+
+// }
+const {data,isLoading,isFetching}=useAllusersQuery({skills:tech,available:available,page:page,limit:10});
+
+console.log(data);
+
+  if(isLoading){
+    return <div>Loading</div>
+  }
   return (
     <div className={styles.all}>
         {/* Front view element in above div */}
@@ -129,8 +160,21 @@ export default function Hire() {
 
         {/* list and filter table in below div */}
         <div className={styles.listandfilt}>
-            <div className={styles.talentlist}><TalentCard/></div>
-            <div className={styles.filter}>
+            <div className={styles.talentlist}>
+             
+              {/* <TalentCard/> */}
+              {
+                data.map((data:output,i: React.Key | null | undefined)=>(
+                  <div key={i}>
+                     <TalentCard data={data}/>
+                  </div>
+                ))
+              }
+              <Button onClick={()=>setpage(page-1)} >Previous</Button>
+              <Button onClick={()=>setpage(page+1)} >Next</Button>
+
+              </div>
+            <form  className={styles.filter}>
               <div>
             <span>Technology</span>
             <Autocomplete
@@ -159,12 +203,12 @@ export default function Hire() {
         multiple
         id="tags-outlined"
       
-        options={names}
+        options={availablelist}
         getOptionLabel={(option) => option}
         // defaultValue={[top100Films[0]]}
         filterSelectedOptions
         onChange={(e,v)=>{
-          settech(v)
+          setavailable(v)
         }}
         renderInput={(params) => (
           <TextField
@@ -175,8 +219,8 @@ export default function Hire() {
         )}
       />
             </div>
-            <Button variant='contained'>Search</Button>
-            </div>
+            <Button variant='contained' type='submit'>Search</Button>
+            </form>
         </div>
 
     </div>

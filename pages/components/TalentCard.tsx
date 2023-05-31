@@ -6,7 +6,21 @@ import link from "../../public/linkedin.png"
 import skills from "../../public/creative-thinking.png"
 import { Button } from '@mui/material'
 
-export default function TalentCard() {
+
+interface output{
+  id:number,
+  name:string,
+  email:string,
+  portfoilo:string,
+  skills:string[],
+  expertise:string,
+  about:string,
+  password:string,
+  img:string,
+  available:string[]
+}
+
+export default function TalentCard({data}:{data:output}) {
   
   
   const skilarr=["java","js","xhtml"];
@@ -20,8 +34,8 @@ export default function TalentCard() {
             <div className={styles.imgcolor}></div>
 
             <div className={styles.cardcred}>
-            <span className={styles.talentname}>Devyank Nagpal</span>
-            <span className={styles.talentname}>Developer</span>
+            <span className={styles.talentname}>{data.name}</span>
+            <span className={styles.talentname}>{data.expertise}</span>
 
             </div>
           </div>
@@ -52,7 +66,7 @@ export default function TalentCard() {
 </div>
 <div className={styles.skillcon}>
 {
-  skilarr.map((val,index)=>(
+  data.skills && data.skills.map((val,index)=>(
       <span key={index} className={styles.skillbox}>{val}</span>
       ))
 }
