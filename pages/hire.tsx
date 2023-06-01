@@ -164,7 +164,7 @@ console.log(data);
              
               {/* <TalentCard/> */}
               {
-                data.map((data:output,i: React.Key | null | undefined)=>(
+                data && data.map((data:output,i: React.Key | null | undefined)=>(
                   <div key={i}>
                      <TalentCard data={data}/>
                   </div>

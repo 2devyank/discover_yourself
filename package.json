@@ -25,6 +25,7 @@
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
     "react-redux": "^8.0.5",
+    "socket.io-client": "^4.6.2",
     "typescript": "5.0.4",
     "universal-cookie": "^4.0.4"
   }
