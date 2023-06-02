@@ -39,8 +39,10 @@ return ()=>socket.off('receive_message');
         messagesRecieved.map((msg,i)=>(
           <div key={i}>
             {msg.username}
+            <br />
             {formatDateFromTimeStamp(msg.__createdtime__)}
-          {msg.message} hello
+            <br />
+          {msg.message} 
           </div>
         ))
       }
