@@ -1,52 +1,53 @@
-import React, { useEffect, useState } from 'react'
-import { Socket, io } from 'socket.io-client';
-import { socket } from './chatform';
-export default function chat() {
+import { useUserContext } from '@/context/User';
+import React, { SetStateAction, useEffect, useState } from 'react'
+import { io } from 'socket.io-client';
 
-  interface user{
-    message:string,
-    username:string,
-    __createdtime__:string
-  }
+interface messdata{
+  room:string|undefined,
+  message:string,
+  author:string|undefined,
+  time:string
+}
+const socket = io('http://localhost:8080');
+export default function Chat() {
+  const about=useUserContext();
+    const [currentMessage,setCurrentMessage]=useState<string>("");
+    const [messageList,setMessageList]=useState<messdata[]>([]);
   
-  const [messagesRecieved,setMessagesRecieved]=useState<user[]>([]);
-  // const socket = io('http://localhost:8080');
+  const handlesendmessage= async()=>{
+    if(currentMessage!==""){
+        const messagedata:messdata={
+            room:about?.room,
+            message:currentMessage,
+            author:about?.user,
+            time:new Date(new Date()).getHours()+":"+new Date(new Date()).getMinutes()
+        }
+        await socket.emit('send_message',messagedata);
+        setMessageList((list)=> [...list,messagedata]);
+    }
+  }
 
-  useEffect(():any=>{
-    console.log('hello')
-socket.on('receive_message',(data)=>{
-  console.log("data"+data);
-  setMessagesRecieved((state) => [
-    ...state,
-    {
-      message: data.message,
-      username: data.username,
-      __createdtime__: data.__createdtime__,
-    },
-  ]);
-});
-
-return ()=>socket.off('receive_message');
+  useEffect(()=>{
+    
+    socket.on("receive_message",(data:messdata)=>{
+      console.log("receive_message"+data);
+setMessageList((list)=> [...list,data]);
+    })
+    
   },[socket]);
- function formatDateFromTimeStamp(timestamp:string){
-  const date=new Date(timestamp);
-  return date.toLocaleDateString();
- }
-  return (
+  // console.log(messageList);
+    return (
     <div>
-      Hello
-      {
-        messagesRecieved.map((msg,i)=>(
-          <div key={i}>
-            {msg.username}
-            <br />
-            {formatDateFromTimeStamp(msg.__createdtime__)}
-            <br />
-          {msg.message} 
-          </div>
-        ))
-      }
-
+        <div className='chatheader'></div>
+        <div className='chatbody'>
+      {messageList.map((msg)=>(
+<h1>{msg.message}</h1>
+      ))}
+        </div>
+        <div className='chatfooter'>
+            <input type="text" onChange={(e)=>setCurrentMessage(e.target.value)}/>
+            <button onClick={handlesendmessage}>&#9658;</button>
+        </div>
     </div>
   )
 }
