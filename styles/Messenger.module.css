@@ -1,0 +1,11 @@
+.own{
+    align-self: end;
+    border: 1px solid red;
+    width: 30%;
+}
+.notown{
+  align-self: start;
+  border: 1px solid red;
+  width: 30%;
+
+}

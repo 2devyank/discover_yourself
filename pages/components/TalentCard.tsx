@@ -74,7 +74,11 @@ export default function TalentCard({data}:{data:output}) {
      
       <div className={styles.cardfoot}>
       <Button  variant="contained">View Profile</Button>
+      <div>
+
       <Button  variant="contained">Share</Button>
+      <Button  variant="contained">Send Message</Button>
+      </div>
       </div>
 
 

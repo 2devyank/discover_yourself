@@ -40,6 +40,12 @@ endpoints:(builder)=>({
       headers:{"Authorization":`Bearer ${token}`}
     })
   }) ,
+  userbyid:builder.query<output,void>({
+    query:(id)=>({
+      url:`/user/${id}`,
+      headers:{"Authorization":`Bearer ${token}`}
+    })
+  }) ,
   allusers:builder.query({
     query:(args)=>{
       const {skills,available,page,limit}=args;
@@ -74,4 +80,4 @@ endpoints:(builder)=>({
 })
 })
 
-export const {useUsersQuery,useAllusersQuery,useLoginTaskMutation,useAddauthMutation,useUpdateTaskMutation} =authApi;
+export const {useUserbyidQuery,useUsersQuery,useAllusersQuery,useLoginTaskMutation,useAddauthMutation,useUpdateTaskMutation} =authApi;
