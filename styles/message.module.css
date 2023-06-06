@@ -1,0 +1,11 @@
+.leftmes{
+    width: 40%;
+    border: 1px solid red;
+}
+.rightmes{
+    width: 60%;
+    border: 1px solid red;
+}
+.allmes{
+    display: flex;
+}
