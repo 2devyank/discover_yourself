@@ -2,12 +2,29 @@
     width: 40%;
     border: 1px solid red;
 }
-.rightmes{
+.coverright{
     width: 60%;
+    height: 86vh;
+    border: 1px solid red;
+}
+.rightmes{
+    height: 80%;
     border: 1px solid red;
     display: flex;
+    gap: 20px;
     flex-direction: column;
+    overflow-y: scroll;
+}
+.innerright{
+    display: flex;
+    flex-direction: column
+
 }
 .allmes{
     display: flex;
+    border: 1px solid red;
+}
+.sendmes{
+    display: flex;
+    align-items: first baseline;
 }
