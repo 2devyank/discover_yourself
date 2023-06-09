@@ -2,9 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
 interface output{
-    con_id:number,
-    text:string,
-    sender:number
+    con_id:number|undefined,
+    text:string|undefined,
+    sender:string|null
 }
 
 export const messageApi=createApi({

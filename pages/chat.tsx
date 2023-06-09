@@ -8,7 +8,7 @@ interface messdata{
   author:string|undefined,
   time:string
 }
-const socket = io('http://localhost:8080');
+// const socket = io('http://localhost:8080');
 export default function Chat() {
   const about=useUserContext();
     const [currentMessage,setCurrentMessage]=useState<string>("");
@@ -22,19 +22,19 @@ export default function Chat() {
             author:about?.user,
             time:new Date(new Date()).getHours()+":"+new Date(new Date()).getMinutes()
         }
-        await socket.emit('send_message',messagedata);
+        // await socket.emit('send_message',messagedata);
         setMessageList((list)=> [...list,messagedata]);
     }
   }
 
-  useEffect(()=>{
+//   useEffect(()=>{
     
-    socket.on("receive_message",(data:messdata)=>{
-      console.log("receive_message"+data);
-setMessageList((list)=> [...list,data]);
-    })
+//     socket.on("receive_message",(data:messdata)=>{
+//       console.log("receive_message"+data);
+// setMessageList((list)=> [...list,data]);
+//     })
     
-  },[socket]);
+//   },[socket]);
   // console.log(messageList);
     return (
     <div>

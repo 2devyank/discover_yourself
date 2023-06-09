@@ -1,9 +1,9 @@
 import React from 'react'
 import styles from "../../styles/Messenger.module.css"
 interface output{
-    con_id:number,
-    text:string,
-    sender:number
+  con_id:number|undefined,
+  text:string|undefined,
+  sender:string|null
 }
 
 export default function Messenger({mesdata,own}:{mesdata:output,own:boolean}) {
