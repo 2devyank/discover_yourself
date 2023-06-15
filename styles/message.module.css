@@ -20,6 +20,11 @@
     flex-direction: column
 
 }
+.inupright{
+    display: flex;
+    flex-direction: column
+
+}
 .allmes{
     display: flex;
     border: 1px solid red;

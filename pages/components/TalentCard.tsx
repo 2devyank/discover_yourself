@@ -5,6 +5,8 @@ import github from "../../public/github.png"
 import link from "../../public/linkedin.png"
 import skills from "../../public/creative-thinking.png"
 import { Button } from '@mui/material'
+import { usePostconverseMutation } from '@/features/Converse'
+import { useRouter } from 'next/router'
 
 
 interface output{
@@ -21,10 +23,20 @@ interface output{
 }
 
 export default function TalentCard({data}:{data:output}) {
-  
-  
+  const router=useRouter();
+ const[addconverse]= usePostconverseMutation()
+ const id = typeof window !== 'undefined' ? localStorage.getItem('userid') : null
   const skilarr=["java","js","xhtml"];
-  
+  const handlesendmessage=async(e: { preventDefault: () => void; })=>{
+e.preventDefault();
+const con={
+  members:[data?.id.toString(),id]
+}
+await addconverse(con);
+router.push('/messages');
+
+
+  }
   
   return (
     <div className={styles.borcard}>
@@ -77,7 +89,7 @@ export default function TalentCard({data}:{data:output}) {
       <div>
 
       <Button  variant="contained">Share</Button>
-      <Button  variant="contained">Send Message</Button>
+      <Button  variant="contained" onClick={handlesendmessage} >Send Message</Button>
       </div>
       </div>
 

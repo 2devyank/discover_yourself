@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
 interface output{
-members:number[],
+members:string[],
 con_id:number
 }
 

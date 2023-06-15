@@ -5,10 +5,10 @@ import React, { useEffect, useState } from 'react'
 
 
 interface output{
-    members:number[],
+    members:string[],
     con_id:number
     }
-export default function Meslist({data,currentuser}:{data:output,currentuser:number}) {
+export default function Meslist({data,currentuser}:{data:output,currentuser:string|null}) {
    
    
 const fid=data.members.find((id)=>id!==currentuser);

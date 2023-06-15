@@ -7,7 +7,7 @@ interface output{
 }
 
 export default function Messenger({mesdata,own}:{mesdata:output,own:boolean}) {
-    console.log(own);
+    // console.log(own);
   return (
 <div className={own?styles.own:styles.notown}>
 {mesdata.text}

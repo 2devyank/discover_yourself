@@ -4,6 +4,7 @@ import { expApi } from "./features/Experience";
 import { projectApi } from "./features/Project";
 import { messageApi } from "./features/Message";
 import { converseApi } from "./features/Converse";
+import { feedApi } from "./features/Feed";
 
 
 
@@ -13,11 +14,12 @@ export const store =configureStore({
         [expApi.reducerPath]:expApi.reducer,
         [projectApi.reducerPath]:projectApi.reducer,
         [messageApi.reducerPath]:messageApi.reducer,
-        [converseApi.reducerPath]:converseApi.reducer
+        [converseApi.reducerPath]:converseApi.reducer,
+        [feedApi.reducerPath]:feedApi.reducer,
 
 
     },
     middleware:(getDefaultMiddleware)=>
-    getDefaultMiddleware().concat(authApi.middleware).concat(expApi.middleware).concat(projectApi.middleware).concat(messageApi.middleware).concat(converseApi.middleware)
+    getDefaultMiddleware().concat(authApi.middleware).concat(expApi.middleware).concat(projectApi.middleware).concat(messageApi.middleware).concat(converseApi.middleware).concat(feedApi.middleware)
 
 })
