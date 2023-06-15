@@ -7,6 +7,8 @@ import { Grid } from '@giphy/react-components';
 import GifIcon from '@mui/icons-material/Gif';
 import Image from 'next/image';
 import { Box, Button, Modal, Typography } from '@mui/material';
+import CancelSharpIcon from '@mui/icons-material/CancelSharp';
+
 interface gif{
   url:string,
   id:string
@@ -80,20 +82,13 @@ console.log(gifdata);
               </div>
               {
 
-          inputurl && <img src={inputurl} alt="" />
+          inputurl &&
+          <div className={styles.crossdiv}>
+            <img src={inputurl} alt="" width={390} height={600} />
+            <CancelSharpIcon onClick={()=>setinputurl("")} className={styles.cross}/>
+          </div>
               }
-              
-            {/* {
-              gifdata.map((data)=>(
-
-              <img 
-              src={data.images.original.webp}
-              alt="adf"
-              width={200}
-              height={200}
-                  />
-               ) )
-            } */}
+          
           
             </div>
             

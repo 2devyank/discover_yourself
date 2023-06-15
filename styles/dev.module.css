@@ -63,3 +63,15 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.crossdiv{
+    position: relative;
+    border :1px solid red;
+    display: inline-block;
+    width: 390px;
+    height: 600px;
+}
+.cross{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
