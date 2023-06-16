@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from "../styles/dev.module.css"
-import { useFeedQuery } from '@/features/Feed'
+import { useFeedQuery, usePostfeedMutation } from '@/features/Feed'
 import ImageIcon from '@mui/icons-material/Image';
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import { Grid } from '@giphy/react-components';
@@ -8,7 +8,8 @@ import GifIcon from '@mui/icons-material/Gif';
 import Image from 'next/image';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import CancelSharpIcon from '@mui/icons-material/CancelSharp';
-
+import SendSharpIcon from '@mui/icons-material/SendSharp';
+import Feedcard from './components/Feedcard';
 interface gif{
   url:string,
   id:string
@@ -19,22 +20,14 @@ export default function devboard() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
+  
+  
 
+const [Addfeed]=usePostfeedMutation();
 
 
 const [gifdata,setgifdata]=useState<any[]>([]);
-const [url,seturl]=useState<string>("");
+// const [url,seturl]=useState<string>("");
   const {data,isFetching,isSuccess,error}=useFeedQuery();
   console.log(data);
 
@@ -42,6 +35,7 @@ const gf=new GiphyFetch('7nhkFNFEATmyeEHpJ2AYMVy6rLSUxE6k')
 // const searchTerm=useRef<HTMLInputElement>(null);
 const [searchTerm,setsearchterm]=useState<string>("")
 const [inputurl,setinputurl]=useState<string>("")
+const inputfeed=useRef<HTMLInputElement>(null);
 
 useEffect(()=>{
 
@@ -58,6 +52,15 @@ useEffect(()=>{
 // seturl(gifdata[0].images.original.webp)
 console.log(gifdata);
 // console.log(gifdata[0].images.original.webp)
+const handlefeedsend=async(e: { preventDefault: () => void; })=>{
+e.preventDefault();
+const feed={
+  text:inputfeed.current?.value,
+  url:inputurl
+}
+await Addfeed(feed);
+
+}
   return (
     <div className={styles.alldev}>
         <div className={styles.allboard}>
@@ -74,11 +77,15 @@ console.log(gifdata);
               <div className={styles.inputcover}>
 
             <div className={styles.inputbox}>
-              <input type="text" className={styles.search}/>
+              <input type="text" className={styles.search} ref={inputfeed}/>
               <div className={styles.icons}>
+                <div className={styles.lefticon}>
 
               <ImageIcon/>
               <GifIcon onClick={handleOpen} />
+                </div>
+                {/* <button>SEND</button> */}
+                <SendSharpIcon onClick={handlefeedsend}/>
               </div>
               {
 
@@ -92,6 +99,13 @@ console.log(gifdata);
           
             </div>
             
+              </div>
+              <div>
+{
+  data?.map((feeddata)=>(
+<Feedcard text={feeddata.text} url={feeddata.url}/>
+  ))
+}
               </div>
               {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal

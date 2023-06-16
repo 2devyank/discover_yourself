@@ -37,13 +37,18 @@
     display: flex;
     flex-direction: column;
 }
+.lefticon{
+    display: flex;
+    gap: 10px;
+}
 .search{
     width: 99%;
 }
 .icons{
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
 }
+.lefticon
 .gifbox{
    
     overflow-y: scroll;
@@ -74,4 +79,5 @@
     position: absolute;
     top: 0px;
     right: 0px;
+    cursor: pointer;
 }
