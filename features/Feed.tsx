@@ -2,8 +2,10 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface output{
     text:string,
-    url:string
+    url:string,
+    img:string,
 }
+
 const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
 
 export const feedApi=createApi({

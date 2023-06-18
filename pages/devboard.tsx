@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from "../styles/dev.module.css"
+import { v4 as uuidv4 } from "uuid";
 import { useFeedQuery, usePostfeedMutation } from '@/features/Feed'
 import ImageIcon from '@mui/icons-material/Image';
 import { GiphyFetch } from '@giphy/js-fetch-api';
@@ -11,6 +12,7 @@ import { Box, Button, Modal, Typography } from '@mui/material';
 import CancelSharpIcon from '@mui/icons-material/CancelSharp';
 import SendSharpIcon from '@mui/icons-material/SendSharp';
 import Feedcard from './components/Feedcard';
+import { supabase } from '@/supabase';
 interface gif{
   url:string,
   id:string
@@ -53,20 +55,35 @@ useEffect(()=>{
 // seturl(gifdata[0].images.original.webp)
 console.log(gifdata);
 // console.log(gifdata[0].images.original.webp)
+const [file,setfile]=useState<any>();
+
 const handlefeedsend=async(e: { preventDefault: () => void; })=>{
 e.preventDefault();
+
+const filename=`${uuidv4()}-${file?.name}`;
+const {data,error}=await supabase.storage
+.from("images")
+.upload(filename,file,{
+cacheControl:"3600",
+upsert:false,
+})
+console.log(error);
+const filepath=data?.path;
 const feed={
   text:inputfeed,
-  url:inputurl
+  url:inputurl,
+  img:filepath
 }
 await Addfeed(feed);
-
 }
 
 const handleattherate=(e: { preventDefault: () => void; })=>{
 e.preventDefault();
 setinputfeed(inputfeed+"@");
 }
+console.log(file);
+
+
   return (
     <div className={styles.alldev}>
         <div className={styles.allboard}>
@@ -87,7 +104,7 @@ setinputfeed(inputfeed+"@");
               <div className={styles.icons}>
                 <div className={styles.lefticon}>
 
-              <ImageIcon/>
+              <input type="file" onChange={(e)=>{setfile(e.target.files?.[0])}}/>
               <GifIcon onClick={handleOpen} />
               <AlternateEmailIcon onClick={handleattherate}/>
                 </div>
@@ -109,8 +126,8 @@ setinputfeed(inputfeed+"@");
               </div>
               <div>
 {
-  data?.map((feeddata)=>(
-<Feedcard text={feeddata.text} url={feeddata.url}/>
+  data?.map((feeddata,i)=>(
+<Feedcard text={feeddata.text} key={i} url={feeddata.url} img={feeddata.img}/>
   ))
 }
               </div>
