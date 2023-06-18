@@ -5,6 +5,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import { Grid } from '@giphy/react-components';
 import GifIcon from '@mui/icons-material/Gif';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import Image from 'next/image';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import CancelSharpIcon from '@mui/icons-material/CancelSharp';
@@ -35,7 +36,7 @@ const gf=new GiphyFetch('7nhkFNFEATmyeEHpJ2AYMVy6rLSUxE6k')
 // const searchTerm=useRef<HTMLInputElement>(null);
 const [searchTerm,setsearchterm]=useState<string>("")
 const [inputurl,setinputurl]=useState<string>("")
-const inputfeed=useRef<HTMLInputElement>(null);
+const [inputfeed,setinputfeed]=useState<string>("");
 
 useEffect(()=>{
 
@@ -55,11 +56,16 @@ console.log(gifdata);
 const handlefeedsend=async(e: { preventDefault: () => void; })=>{
 e.preventDefault();
 const feed={
-  text:inputfeed.current?.value,
+  text:inputfeed,
   url:inputurl
 }
 await Addfeed(feed);
 
+}
+
+const handleattherate=(e: { preventDefault: () => void; })=>{
+e.preventDefault();
+setinputfeed(inputfeed+"@");
 }
   return (
     <div className={styles.alldev}>
@@ -77,12 +83,13 @@ await Addfeed(feed);
               <div className={styles.inputcover}>
 
             <div className={styles.inputbox}>
-              <input type="text" className={styles.search} ref={inputfeed}/>
+              <input type="text" className={styles.search} value={inputfeed} onChange={(e)=>setinputfeed(e.target.value)}/>
               <div className={styles.icons}>
                 <div className={styles.lefticon}>
 
               <ImageIcon/>
               <GifIcon onClick={handleOpen} />
+              <AlternateEmailIcon onClick={handleattherate}/>
                 </div>
                 {/* <button>SEND</button> */}
                 <SendSharpIcon onClick={handlefeedsend}/>

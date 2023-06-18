@@ -33,18 +33,21 @@ reducerPath:"authsApi",
 baseQuery:fetchBaseQuery({
     baseUrl:"http://localhost:8080/"
 }),
+tagTypes:['User'],
 endpoints:(builder)=>({
   users:builder.query<output,void>({
     query:()=>({
       url:"/user",
       headers:{"Authorization":`Bearer ${token}`}
-    })
+    }),
+    providesTags:['User'],
   }) ,
   userbyid:builder.query<output,void>({
     query:(id)=>({
       url:`/user/${id}`,
       headers:{"Authorization":`Bearer ${token}`}
-    })
+    }),
+    providesTags:['User']
   }) ,
   allusers:builder.query({
     query:(args)=>{
@@ -52,21 +55,24 @@ endpoints:(builder)=>({
       return {
         url:`/alluser?skills=${skills}&available=${available}&page=${page}&limit=${limit}`
       }
-    }
+    },
+
   }),
   addauth:builder.mutation({
     query:(task)=>({
       url:"/register",
       method:"POST",
       body:task
-    })
+    }),
+    invalidatesTags:['User'],
   }),
   loginTask:builder.mutation({
     query:(task)=>({
       url:"/login",
       method:"POST",
       body:task
-    })
+    }),
+    invalidatesTags:['User']
   }) ,
   UpdateTask:builder.mutation({
     query:({id,...task})=>({
@@ -74,7 +80,9 @@ endpoints:(builder)=>({
       headers:{"Authorization":`Bearer ${token}`},
       method:"PUT",
       body:task
-    })
+    }),
+    invalidatesTags:['User']
+
   })
   
 })

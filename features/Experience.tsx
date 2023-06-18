@@ -16,18 +16,21 @@ export const expApi=createApi({
     baseQuery:fetchBaseQuery({
         baseUrl:"http://localhost:8080/"
     }),
+    tagTypes:['Exp'],
     endpoints:(builder)=>({
        exps: builder.query<output[],void>({
         query:()=>({
             url:"/exp",
             headers:{"Authorization":`Bearer ${token}`}
-        })
+        }),
+        providesTags:['Exp']
        }),
        expsbyid: builder.query<output,void>({
         query:(id)=>({
             url:`/exp/${id}`,
           
-        })
+        }),
+        providesTags:['Exp']
        }),
        postexps:builder.mutation({
         query:(exp)=>({
@@ -35,7 +38,8 @@ export const expApi=createApi({
             method:"POST",
             headers:{"Authorization":`Bearer ${token}`},
             body:exp
-        })
+        }),
+        invalidatesTags:['Exp']
        }),
        putexp:builder.mutation({
         query:({id,...exp})=>({
@@ -43,13 +47,15 @@ export const expApi=createApi({
             method:"PUT",
             headers:{"Authorization":`Bearer ${token}`},
             body:exp
-        })
+        }),
+        invalidatesTags:['Exp'],
        }),
        deleteexp:builder.mutation({
         query:(id)=>({
             url:`/exp/${id}`,
             method:"DELETE"
-        })
+        }),
+        invalidatesTags:['Exp']
        })
     })
 })

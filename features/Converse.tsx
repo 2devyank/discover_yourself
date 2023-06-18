@@ -11,18 +11,23 @@ export const converseApi=createApi({
     baseQuery:fetchBaseQuery({
         baseUrl:"http://localhost:8080/"
     }),
+    tagTypes:['Con'],
     endpoints:(builder)=>({
         converse: builder.query<output[],void>({
             query:(id)=>({
                 url:`/converse/${id}`,
-            })
+            }),
+            providesTags:['Con']
+            
            }),
            postconverse:builder.mutation({
             query:(con)=>({
                 url:"/converse",
                 method:"POST",
                 body:con
-            })
+            }),
+            invalidatesTags:['Con']
+            
            }),
     })
 

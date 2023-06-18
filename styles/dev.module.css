@@ -47,6 +47,7 @@
 .icons{
     display: flex;
     justify-content: space-between;
+    padding: 6px 4px;
 }
 .lefticon
 .gifbox{

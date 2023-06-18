@@ -16,17 +16,20 @@ export const projectApi=createApi({
     baseQuery:fetchBaseQuery({
         baseUrl:"http://localhost:8080/"
     }),
+    tagTypes:['Project'],
     endpoints:(builder)=>({
        project: builder.query<output[],void>({
         query:()=>({
             url:"/project",
             headers:{"Authorization":`Bearer ${token}`}
-        })
+        }),
+        providesTags:['Project']
        }),
        projectbyid: builder.query<output,void>({
         query:(id)=>({
             url:`/project/${id}`,
-        })
+        }),
+        providesTags:['Project']
        }),
        posteproject:builder.mutation({
         query:(exp)=>({
@@ -34,7 +37,8 @@ export const projectApi=createApi({
             method:"POST",
             headers:{"Authorization":`Bearer ${token}`},
             body:exp
-        })
+        }),
+        invalidatesTags:['Project']
        }),
        putproject:builder.mutation({
         query:({id,...exp})=>({
@@ -42,13 +46,15 @@ export const projectApi=createApi({
             method:"PUT",
             headers:{"Authorization":`Bearer ${token}`},
             body:exp
-        })
+        }),
+        invalidatesTags:['Project']
        }),
        deleteproject:builder.mutation({
         query:(id)=>({
             url:`/project/${id}`,
             method:"DELETE"
-        })
+        }),
+        invalidatesTags:['Project']
        })
     })
 })

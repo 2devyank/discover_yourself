@@ -12,19 +12,22 @@ export const messageApi=createApi({
     baseQuery:fetchBaseQuery({
         baseUrl:"http://localhost:8080/"
     }),
+    tagTypes:['Mes'],
     endpoints:(builder)=>({
         message: builder.query<output[],void>({
             query:(id)=>({
                 url:`/message/${id}`,
                
-            })
+            }),
+            providesTags:['Mes'],
            }),
            postmessage:builder.mutation({
             query:(mes)=>({
                 url:"/message",
                 method:"POST",
                 body:mes
-            })
+            }),
+            invalidatesTags:['Mes']
            })
     })
 
