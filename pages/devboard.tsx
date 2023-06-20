@@ -13,10 +13,10 @@ import CancelSharpIcon from '@mui/icons-material/CancelSharp';
 import SendSharpIcon from '@mui/icons-material/SendSharp';
 import Feedcard from './components/Feedcard';
 import { supabase } from '@/supabase';
-interface gif{
-  url:string,
-  id:string
-}
+import gif from "../public/gif.png"
+import atrate from "../public/arroba.png"
+import image from "../public/image.png"
+import { Blob } from 'buffer';
 
 export default function devboard() {
 
@@ -24,7 +24,7 @@ export default function devboard() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   
-  
+  const [prev,setprev]=useState<any>();
 
 const [Addfeed]=usePostfeedMutation();
 
@@ -59,22 +59,27 @@ const [file,setfile]=useState<any>();
 
 const handlefeedsend=async(e: { preventDefault: () => void; })=>{
 e.preventDefault();
+let filepath;
+if(file){
 
-const filename=`${uuidv4()}-${file?.name}`;
-const {data,error}=await supabase.storage
-.from("images")
-.upload(filename,file,{
-cacheControl:"3600",
-upsert:false,
-})
-console.log(error);
-const filepath=data?.path;
+  const filename=`${uuidv4()}-${file?.name}`;
+  const {data,error}=await supabase.storage
+  .from("images")
+  .upload(filename,file,{
+    cacheControl:"3600",
+    upsert:false,
+  })
+  console.log(error);
+   filepath=data?.path;
+}
+
 const feed={
   text:inputfeed,
   url:inputurl,
   img:filepath
 }
 await Addfeed(feed);
+setinputfeed("");
 }
 
 const handleattherate=(e: { preventDefault: () => void; })=>{
@@ -83,7 +88,25 @@ setinputfeed(inputfeed+"@");
 }
 console.log(file);
 
-
+useEffect(()=>{
+let fileReader: FileReader,isCancel=false;
+if(file){
+  fileReader=new FileReader();
+  fileReader.onload=(e)=>{
+    const result =e.target?.result;
+    if(result && !isCancel){
+      setprev(result);
+    }
+  }
+  fileReader.readAsDataURL(file);
+}
+return ()=>{
+  isCancel=true;
+  if(fileReader && fileReader.readyState===1){
+    fileReader.abort();
+  }
+}
+},[file]) 
   return (
     <div className={styles.alldev}>
         <div className={styles.allboard}>
@@ -103,13 +126,43 @@ console.log(file);
               <input type="text" className={styles.search} value={inputfeed} onChange={(e)=>setinputfeed(e.target.value)}/>
               <div className={styles.icons}>
                 <div className={styles.lefticon}>
+<div className={styles.imgupload}>
+  <label htmlFor='file-input'>
+  <Image
+              src={image}
+              alt="gif"
+              width={20}
+              height={20}
+              className={styles.point}
+/>
+  </label>
 
-              <input type="file" onChange={(e)=>{setfile(e.target.files?.[0])}}/>
-              <GifIcon onClick={handleOpen} />
-              <AlternateEmailIcon onClick={handleattherate}/>
+              <input id="file-input" type="file" onChange={(e)=>{setfile(e.target.files?.[0])}}/>
+</div>
+              <Image
+              src={gif}
+              alt="gif"
+              width={20}
+              height={20}
+              onClick={handleOpen}
+              className={styles.point}
+/>
+              {/* <GifIcon onClick={handleOpen} /> */}
+              <Image
+              src={atrate}
+              alt="gif"
+              width={20}
+              height={20}
+              className={styles.point}
+              onClick={handleattherate}
+/>
+              {/* <AlternateEmailIcon onClick={handleattherate}/> */}
                 </div>
                 {/* <button>SEND</button> */}
-                <SendSharpIcon onClick={handlefeedsend}/>
+                <div className={styles.post} onClick={handlefeedsend}>
+                <span>POST</span>
+                <SendSharpIcon />
+                </div>
               </div>
               {
 
@@ -119,6 +172,14 @@ console.log(file);
             <CancelSharpIcon onClick={()=>setinputurl("")} className={styles.cross}/>
           </div>
               }
+              {
+                file && 
+                <div className={styles.crossdiv}>
+                  <Image src={prev} alt="prev" width={390} height={600} />
+                  <CancelSharpIcon onClick={()=>setfile("")} className={styles.cross}/>
+
+                </div>
+              }
           
           
             </div>
@@ -127,7 +188,7 @@ console.log(file);
               <div>
 {
   data?.map((feeddata,i)=>(
-<Feedcard text={feeddata.text} key={i} url={feeddata.url} img={feeddata.img}/>
+<Feedcard text={feeddata.text} key={i} url={feeddata.url} img={feeddata.img} name={feeddata.name} exp={feeddata.expertise}/>
   ))
 }
               </div>
@@ -140,7 +201,7 @@ console.log(file);
       >
         <div className={styles.cont}>
         
-          <input type="text" value={searchTerm} onChange={(e)=>setsearchterm(e.target.value)} />
+          <input placeholder='Search GIF !' type="text" className={styles.gifinput} value={searchTerm} onChange={(e)=>setsearchterm(e.target.value)} />
            <div className={styles.gifbox}>
 
            {

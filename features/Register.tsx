@@ -88,4 +88,4 @@ endpoints:(builder)=>({
 })
 })
 
-export const {useUserbyidQuery,useUsersQuery,useAllusersQuery,useLoginTaskMutation,useAddauthMutation,useUpdateTaskMutation} =authApi;
+export const {useUserbyidQuery,useUsersQuery,useLazyAllusersQuery,useLoginTaskMutation,useAddauthMutation,useUpdateTaskMutation} =authApi;

@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "../styles/hire.module.css"
 import Image from 'next/image'
 import select from "../public/select.png"
 import quote from "../public/quote.png"
 import TalentCard from './components/TalentCard'
 import { Autocomplete, Button, TextField } from '@mui/material'
-import { useAddauthMutation, useAllusersQuery } from '@/features/Register'
+import { useAddauthMutation, useLazyAllusersQuery } from '@/features/Register'
 
 
 
@@ -106,18 +106,45 @@ export default function Hire() {
 const [page,setpage]=useState(0);
 const [tech,settech]=useState<string[]>([]);
 const [available,setavailable]=useState<string[]>([]);
-// const handlefiltercard=(e)=>{
+const [taldata,settaldata]=useState<output[]>([]);
+// const handlefiltercard=(e)=>
 // e.preventDefault();
 
 
 // }
-const {data,isLoading,isFetching}=useAllusersQuery({skills:tech,available:available,page:page,limit:10});
 
-console.log(data);
 
-  if(isLoading){
-    return <div>Loading</div>
+// const {data,isLoading,isFetching}=useAllusersQuery({skills:tech,available:available,page:page,limit:10});
+
+const [getUsers,results]=useLazyAllusersQuery();
+useEffect(()=>{
+  if(results && results.data){
+    settaldata(results.data)
+
   }
+},[results])
+useEffect(()=>{
+  getUsers({skills:tech,available:available,page:page,limit:10});
+},[])
+console.log(results.data);
+
+  if(results.isLoading){
+    return <div>Loading ...</div>
+  }
+  const handlesearch=(e: { preventDefault: () => void; })=>{
+    e.preventDefault();
+    getUsers({skills:tech,available:available,page:page,limit:10})
+  }
+  const nextpage=(e: { preventDefault: () => void; })=>{
+e.preventDefault();
+getUsers({skills:tech,available:available,page:page+1,limit:10})
+setpage(page+1);
+  }
+  const prevpage=(e: { preventDefault: () => void; })=>{
+    e.preventDefault();
+    
+    getUsers({skills:tech,available:available,page:page-1,limit:10})
+      }
   return (
     <div className={styles.all}>
         {/* Front view element in above div */}
@@ -164,14 +191,14 @@ console.log(data);
              
               {/* <TalentCard/> */}
               {
-                data && data.map((data:output,i: React.Key | null | undefined)=>(
+                results && taldata.map((data:output,i: React.Key | null | undefined)=>(
                   <div key={i}>
                      <TalentCard data={data}/>
                   </div>
                 ))
               }
-              <Button onClick={()=>setpage(page-1)} >Previous</Button>
-              <Button onClick={()=>setpage(page+1)} >Next</Button>
+              <Button onClick={prevpage} >Previous</Button>
+              <Button onClick={nextpage} >Next</Button>
 
               </div>
             <form  className={styles.filter}>
@@ -219,7 +246,7 @@ console.log(data);
         )}
       />
             </div>
-            <Button variant='contained' type='submit'>Search</Button>
+            <Button variant='contained' type='submit' onClick={handlesearch} >Search</Button>
             </form>
         </div>
 

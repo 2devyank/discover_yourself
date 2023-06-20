@@ -4,6 +4,10 @@ interface output{
     text:string,
     url:string,
     img:string,
+    name:string,
+    expertise:string,
+    love:number,
+    comments:string[]
 }
 
 const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
