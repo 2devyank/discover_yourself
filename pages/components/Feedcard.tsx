@@ -5,13 +5,18 @@ import comm from "../../public/comment.png"
 import share from "../../public/share.png"
 import back from "../../public/portfolio.png"
 import styles from "../../styles/feedcard.module.css"
+import { useRouter } from 'next/router'
 
 
 
-
-export default function Feedcard({text,url,img,name,exp,love,comments}:{love:number,comments:string[],name:string,exp:string,img:string,text:string,url:string}) {
+export default function Feedcard({id,text,url,img,name,exp,love,comments}:{id:number,love:number,comments:string[],name:string,exp:string,img:string,text:string,url:string}) {
+  
+  const router=useRouter();
+  const handlegotopage=()=>{
+  router.push(`/feedpage?id=${id}`)
+  }
   return (
-    <div className={styles.feedcard}>
+    <div className={styles.feedcard} onClick={handlegotopage}>
       <div className={styles.head}>{name}</div>
       <div className={styles.lowerh}>
         

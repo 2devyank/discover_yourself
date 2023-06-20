@@ -35,6 +35,7 @@
     display: flex;
     /* align-items: center; */
     justify-content: center;
+    flex-direction: column;
 }
 
 .inputbox {
@@ -120,4 +121,12 @@
     align-items: center;
     gap: 5px;
     cursor: pointer;
+}
+
+.comments{
+    padding: 10px 10px;
+    border: 1px solid black;
+   
+ display: flex;
+ flex-direction: column;   
 }

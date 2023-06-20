@@ -3,9 +3,10 @@
     gap: 20px;
 }
 .feedcard{
-    border-radius: 1rem;
+    /* border-radius: 1rem; */
     border: 1px solid black; 
    padding: 10px 10px;
+   cursor: pointer;
 }
 .head{
 font-weight: 800;

@@ -7,7 +7,8 @@ interface output{
     name:string,
     expertise:string,
     love:number,
-    comments:string[]
+    comments:string[],
+    id:number,
 }
 
 const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
@@ -26,6 +27,13 @@ export const feedApi=createApi({
             }),
             providesTags:['Feed']
            }),
+           getfeedbyid: builder.query<output,void>({
+            query:(id)=>({
+                url:`/feed/${id}`,
+                
+            }),
+            providesTags:['Feed']
+           }),
            postfeed:builder.mutation({
             query:(feed)=>({
                 url:`/feed`,
@@ -34,6 +42,7 @@ export const feedApi=createApi({
                 
                 headers:{"Authorization":`Bearer ${token}`}
             }),
+            
             invalidatesTags:['Feed']
            }),
            deletefeed:builder.mutation({
@@ -52,9 +61,10 @@ export const feedApi=createApi({
             }),
 invalidatesTags:['Feed']
         }),
+        
 
     })
 
 })
 
-export const {useFeedQuery,usePostfeedMutation,useDeletefeedMutation,useUpdatefeedMutation}=feedApi;
+export const {useGetfeedbyidQuery,useFeedQuery,usePostfeedMutation,useDeletefeedMutation,useUpdatefeedMutation}=feedApi;

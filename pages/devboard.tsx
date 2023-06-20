@@ -189,7 +189,7 @@ return ()=>{
               <div>
 {
   data?.map((feeddata,i)=>(
-<Feedcard text={feeddata.text} love={feeddata.love} comments={feeddata.comments} key={i} url={feeddata.url} img={feeddata.img} name={feeddata.name} exp={feeddata.expertise}/>
+<Feedcard id={feeddata.id} text={feeddata.text} love={feeddata.love} comments={feeddata.comments} key={i} url={feeddata.url} img={feeddata.img} name={feeddata.name} exp={feeddata.expertise}/>
   ))
 }
               </div>
