@@ -1,13 +1,26 @@
 import Image from 'next/image'
 import React from 'react'
-import love from "../../public/love.png"
+import lovei from "../../public/love.png"
 import comm from "../../public/comment.png"
 import share from "../../public/share.png"
-export default function Feedcard({text,url,img,name,exp}:{name:string,exp:string,img:string,text:string,url:string}) {
+import back from "../../public/portfolio.png"
+import styles from "../../styles/feedcard.module.css"
+
+
+
+
+export default function Feedcard({text,url,img,name,exp,love,comments}:{love:number,comments:string[],name:string,exp:string,img:string,text:string,url:string}) {
   return (
-    <div>
-      <div>{name}</div>
-      <div>{exp}</div>
+    <div className={styles.feedcard}>
+      <div className={styles.head}>{name}</div>
+      <div className={styles.lowerh}>
+        
+        <Image
+        src={back}
+        alt="back"
+        width={10} height={10}
+        />
+        {exp}</div>
 <p>{text}</p>
 {
  url && <img src={url} alt="" width={300} height={300} />
@@ -15,17 +28,18 @@ export default function Feedcard({text,url,img,name,exp}:{name:string,exp:string
 {
   img && <img alt="" src={`https://uhkmsfzpbtmaewocyogf.supabase.co/storage/v1/object/public/images/${img}`}  width={300} height={300}/>
 }
-<div>
-  <div>
+<div className={styles.cardicon}>
+  <div className={styles.lovediv}>
 
   <Image 
-  src={love}
+  src={lovei}
   alt="af"
   width={20}
   height={20}
   />
+  {love}
   </div>
-  <div>
+  <div className={styles.lovediv}>
 
   <Image 
   src={comm}
@@ -33,6 +47,8 @@ export default function Feedcard({text,url,img,name,exp}:{name:string,exp:string
   width={20}
   height={20}
   />
+  {comments && comments.length !==0? <span>{comments.length}</span>:<span>0</span>
+  }
   </div>
   
   <Image 

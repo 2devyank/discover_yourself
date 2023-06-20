@@ -1,0 +1,23 @@
+.cardicon{
+    display: flex;
+    gap: 20px;
+}
+.feedcard{
+    border-radius: 1rem;
+    border: 1px solid black; 
+   padding: 10px 10px;
+}
+.head{
+font-weight: 800;
+}
+.lowerh{
+    color: gray;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.lovediv{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}

@@ -76,7 +76,8 @@ if(file){
 const feed={
   text:inputfeed,
   url:inputurl,
-  img:filepath
+  img:filepath,
+  love:0
 }
 await Addfeed(feed);
 setinputfeed("");
@@ -188,7 +189,7 @@ return ()=>{
               <div>
 {
   data?.map((feeddata,i)=>(
-<Feedcard text={feeddata.text} key={i} url={feeddata.url} img={feeddata.img} name={feeddata.name} exp={feeddata.expertise}/>
+<Feedcard text={feeddata.text} love={feeddata.love} comments={feeddata.comments} key={i} url={feeddata.url} img={feeddata.img} name={feeddata.name} exp={feeddata.expertise}/>
   ))
 }
               </div>

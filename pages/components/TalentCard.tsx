@@ -37,6 +37,10 @@ router.push('/messages');
 
 
   }
+  const gotoprofilepage=(e: { preventDefault: () => void; })=>{
+e.preventDefault();
+router.push(`tpage?id=${data?.id}`)
+  } 
   
   return (
     <div className={styles.borcard}>
@@ -85,7 +89,7 @@ router.push('/messages');
       </div>
      
       <div className={styles.cardfoot}>
-      <Button  variant="contained">View Profile</Button>
+      <Button  variant="contained" onClick={gotoprofilepage}>View Profile</Button>
       <div>
 
       <Button  variant="contained">Share</Button>

@@ -31,6 +31,12 @@ export const projectApi=createApi({
         }),
         providesTags:['Project']
        }),
+       projectbyprofileid: builder.query<output[],void>({
+        query:(id)=>({
+            url:`/project/${id}`,
+        }),
+        providesTags:['Project']
+       }),
        posteproject:builder.mutation({
         query:(exp)=>({
             url:"/project",
@@ -59,4 +65,4 @@ export const projectApi=createApi({
     })
 })
 
- export const {usePutprojectMutation,useDeleteprojectMutation,usePosteprojectMutation,useProjectQuery,useProjectbyidQuery}=projectApi;
+ export const {useProjectbyprofileidQuery,usePutprojectMutation,useDeleteprojectMutation,usePosteprojectMutation,useProjectQuery,useProjectbyidQuery}=projectApi;
