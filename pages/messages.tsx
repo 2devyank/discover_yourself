@@ -43,6 +43,7 @@ export default function messages() {
   }
   
   const {data:mdata,isSuccess:misSuccess}=useMessageQuery(currentchat?.con_id as unknown as void);
+  
   // console.log(mdata)
   // const socket: Socket<ServerToClientEvents, ClientToServerEvents>=useRef();
   // socket.current=io('http://localhost:8080')
@@ -51,7 +52,7 @@ export default function messages() {
   useEffect(()=>{
     socket.current=io("http://localhost:8080")
     
-    socket.current.on("getMessage",(data:mesout)=>{
+    socket.current?.on("getMessage",(data:mesout)=>{
       console.log(data)
       setarrivalmessages({
         text:data.text,
@@ -71,11 +72,11 @@ export default function messages() {
 //       console.log("room"+room);
 // socket.current?.emit("private_room",room);
 
-    //   setarrivalmessages({
-    //     text:'',
-    //     sender:'',
-    // con_id:-1,
-    //   })
+      setarrivalmessages({
+        text:'',
+        sender:'',
+    con_id:-1,
+      })
      
     }
 
@@ -92,9 +93,9 @@ const submitmessage=async(e: { preventDefault: () => void; })=>{
   }
   
   const rid=currentchat?.members.find((user)=>user.toString()!==id)
-// setmessages([...message,fmessage]);
-currentchat?.members.some((val)=>val===id) && setmessages([...message,mes])
-let room=currentchat?.members[0].concat(currentchat?.members[1]).split("").sort().join("");
+setmessages([...message,mes]);
+// currentchat?.members.some((val)=>val===id) && setmessages([...message,mes])
+// let room=currentchat?.members[0].concat(currentchat?.members[1]).split("").sort().join("");
  socket.current?.emit("sendMessage",{
   
   sender:id,
@@ -115,33 +116,43 @@ socket.current?.emit("addUser",id)
 socket.current?.on("getUsers",users=>{
   console.log(users);
 })
-},[id]);
+},[]);
 
-useEffect(()=>{
-socket.current?.on("getMessage",(data:mesout)=>{
-  console.log(data)
-  setarrivalmessages({
-    text:data.text,
-    sender:data.sender,
-con_id:data.con_id,
-  })
-  // setmessages(prev=>[...prev,data]);
+// useEffect(()=>{
+// socket.current?.on("getMessage",(data:mesout)=>{
+//   console.log(data)
+//   setarrivalmessages({
+//     text:data.text,
+//     sender:data.sender,
+// con_id:data.con_id,
+//   })
+//   // setmessages(prev=>[...prev,data]);
   
-})
-},[])
+// })
+// },[])
 console.log(currentchat?.members[0].concat(currentchat?.members[1]).split("").sort().join(""));
 console.log(Number(arrivalmessage?.sender));
 let num=arrivalmessage?.sender;
 console.log(Number(num));
 console.log(arrivalmessage?.sender);
 console.log(currentchat?.members.some((val)=>val==num));
+console.log(currentchat?.members.includes(arrivalmessage?.sender as string))
 // console.log(currentchat?.members.indexOf(arrivalmessage?.sender!==-1));
 
 useEffect(()=>{
   arrivalmessage && currentchat?.members.some((val)=>val===num) &&
   setmessages(prev=>[...prev,arrivalmessage]);
-  
-},[arrivalmessage])
+//   setarrivalmessages({
+//     text:'',
+//     sender:'',
+// con_id:-1,
+//   })
+  return ()=>setmessages([{
+    text:'',
+        sender:'',
+    con_id:-1,
+  }]);
+},[arrivalmessage,currentchat])
 console.log(message);
   return (
     <div className={styles.allmes}>

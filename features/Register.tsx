@@ -21,6 +21,11 @@ interface Root {
   data: Data
 }
 
+interface out{
+  name:string,
+  id:number
+}
+
  interface Data {
   accesToken: string
 }
@@ -46,6 +51,12 @@ endpoints:(builder)=>({
     query:(id)=>({
       url:`/user/${id}`,
       headers:{"Authorization":`Bearer ${token}`}
+    }),
+    providesTags:['User']
+  }) ,
+  username:builder.query<out[],void>({
+    query:(name)=>({
+      url:`/name/${name}`,
     }),
     providesTags:['User']
   }) ,
@@ -88,4 +99,4 @@ endpoints:(builder)=>({
 })
 })
 
-export const {useUserbyidQuery,useUsersQuery,useLazyAllusersQuery,useLoginTaskMutation,useAddauthMutation,useUpdateTaskMutation} =authApi;
+export const {useUsernameQuery,useUserbyidQuery,useUsersQuery,useLazyAllusersQuery,useLoginTaskMutation,useAddauthMutation,useUpdateTaskMutation} =authApi;

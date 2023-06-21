@@ -17,6 +17,7 @@ import gif from "../public/gif.png"
 import atrate from "../public/arroba.png"
 import image from "../public/image.png"
 import { Blob } from 'buffer';
+import { useUsernameQuery } from '@/features/Register';
 
 export default function devboard() {
 
@@ -108,6 +109,10 @@ return ()=>{
   }
 }
 },[file]) 
+const {data:ndata,isLoading:nload}=useUsernameQuery();
+console.log(ndata);
+
+
   return (
     <div className={styles.alldev}>
         <div className={styles.allboard}>
