@@ -18,6 +18,8 @@ import atrate from "../public/arroba.png"
 import image from "../public/image.png"
 import { Blob } from 'buffer';
 import { useUsernameQuery } from '@/features/Register';
+import Namelist from './components/Namelist';
+import UseDebounce from './components/UseDebounce';
 
 export default function devboard() {
 
@@ -83,10 +85,11 @@ const feed={
 await Addfeed(feed);
 setinputfeed("");
 }
-
+const [fetchname,setfetchname]=useState(false);
 const handleattherate=(e: { preventDefault: () => void; })=>{
 e.preventDefault();
 setinputfeed(inputfeed+"@");
+setfetchname(true);
 }
 console.log(file);
 
@@ -109,8 +112,8 @@ return ()=>{
   }
 }
 },[file]) 
-const {data:ndata,isLoading:nload}=useUsernameQuery();
-console.log(ndata);
+
+  const debouncevalue=UseDebounce(inputfeed.substring(inputfeed.indexOf('@')+1),500)
 
 
   return (
@@ -170,6 +173,10 @@ console.log(ndata);
                 <SendSharpIcon />
                 </div>
               </div>
+            {
+
+            fetchname && <Namelist  name={debouncevalue}  />
+            }  
               {
 
           inputurl &&
@@ -178,6 +185,7 @@ console.log(ndata);
             <CancelSharpIcon onClick={()=>setinputurl("")} className={styles.cross}/>
           </div>
               }
+
               {
                 file && 
                 <div className={styles.crossdiv}>

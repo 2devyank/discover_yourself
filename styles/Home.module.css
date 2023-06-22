@@ -1,0 +1,89 @@
+.all{
+    display: flex;
+    flex-direction: column;
+}
+.frontview{
+    display: flex;
+   
+    /* border: 1px solid red; */
+}
+.leftcontent{
+    padding: 0px 40px;
+    width: 50%;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    /* justify-content: flex-start; */
+  /* border: 1px solid red; */
+}
+.innerleft{
+    display: flex;
+    flex-direction: column;
+}
+.one{
+    align-self: flex-start;
+    font-size: 40px;
+}
+.twobut{
+    display: flex;
+    gap: 20px;
+}
+.youare{
+    align-self: flex-start;
+    font-size: 40px;
+    color: rgb(163, 163, 228);
+  
+}
+.imgcontainer{
+    width: 100%;
+    /* border :1px solid red; */
+    /* height: 60vh; */
+position: unset !important;
+    
+    .img{
+        object-fit: contain;
+        width: 100% !important;
+        height: 60vh;
+        position: relative !important;
+        height: unset !important;
+    }
+}
+.rightimage{
+    width: 50%;
+display: flex;
+/* border: 1px soldid red; */
+/* align-items: center; */
+/* justify-content: center; */
+
+/* border: 1px solid red; */
+}
+
+.small{
+font-size: 20px;
+color: gray;
+}
+
+@media(max-width:800px){
+    .frontview{
+        flex-direction: column;
+        padding: 10px 10px;
+    }
+    .leftcontent{
+        width: 100%;
+        padding: 0px 0px;
+    }
+    
+    .rightimage{
+        width: 100%;
+    }
+    .youare{
+        font-size: 24px;
+    }
+   
+    .one{
+        font-size: 24px;
+    }
+   
+    }

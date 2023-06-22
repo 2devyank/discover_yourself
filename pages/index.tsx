@@ -2,6 +2,10 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+import team from "../public/team.png"
+import up from "../public/up.jpg"
+import con from "../public/con.png"
+import { Button } from '@mui/material'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,7 +18,107 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-     hello
+        {/* first section */}
+        <div className={styles.all}>
+
+     <div className={styles.frontview}>
+            <div className={styles.leftcontent}>
+              <div  className={styles.innerleft}>
+
+               <span className={styles.one}>
+                The Only Platform To 
+                </span>
+             
+                <span className={styles.youare}>
+               Discover Your Skills
+                </span>
+              </div>
+              <div>
+
+          <span className={styles.small}>Collab or hire coders with no middleman 
+            <br />
+             An open platform to hire coders based on skills and Projects.</span>
+              </div>
+             <div className={styles.twobut}>
+              <Button variant='contained'>Add project</Button>
+              <Button variant='outlined'>Hire Talent</Button>
+              </div>
+            </div>
+            <div className={styles.rightimage}>
+              <div className={styles.imgcontainer}>
+                <Image
+                src={team}           
+                alt="asdf"     
+                className={styles.img}
+                fill
+                />
+                </div>
+
+            </div>
+        </div>
+
+     <div className={styles.frontview}>
+            
+            <div className={styles.rightimage}>
+              <div className={styles.imgcontainer}>
+                <Image
+                src={up}           
+                alt="asdf"     
+                className={styles.img}
+                fill
+                />
+                </div>
+            </div>
+              <div className={styles.leftcontent}>
+              <div  className={styles.innerleft}>
+
+               <span className={styles.one}>
+                Discover Projects & <span className={styles.youare}>
+                  
+                  Upskill
+                  </span>
+                </span>
+             
+               
+              </div>
+              <div>
+
+          <span className={styles.small}>We welcome all stacks techies to join and showcase their work The source code and videos attached to their projects provide others with a better understanding of the projects content.
+           </span>
+              </div>
+             
+            </div>
+        </div>
+        <div className={styles.frontview}>
+        <div className={styles.leftcontent}>
+              
+        <div  className={styles.innerleft}>
+
+<span className={styles.one}>
+Platform For Connect,
+ </span>
+
+ <span className={styles.youare}> Collab And Build More Stuff 
+ </span>
+</div>
+<div>
+
+<span className={styles.small}>We want our users to be able to communicate with coders through our platform. Embrace collaboration, connect with others, and code. A simple glance at your showcased projects will connect you directly with startups and top-notch companies.</span>
+</div>
+   </div>
+            <div className={styles.rightimage}>
+              <div className={styles.imgcontainer}>
+                <Image
+                src={con}           
+                alt="asdf"     
+                className={styles.img}
+                fill
+                />
+                </div>
+            </div>
+           
+        </div>
+                </div>
     </>
   )
 }
