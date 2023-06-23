@@ -1,5 +1,7 @@
+import { replaceinput } from '@/features/Input';
 import { useUsernameQuery } from '@/features/Register';
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 
 export default function Namelist({name}:{name:string}) {
     const [filterterm,setfilterterm]=useState<string>("");
@@ -11,11 +13,11 @@ if(name.length===0||name.length>4){
     setfilterterm(name);
 }
 },[name])
-
+const dispatch=useDispatch();
   return (
     <div>{
-    ndata?.map((d)=>(
-<span>{d.name}</span>
+    ndata?.map((d,i)=>(
+<span key={i} onClick={()=>dispatch(replaceinput(d.name))} >{d.name}</span>
     ))
     }</div>
   )

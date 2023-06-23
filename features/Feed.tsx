@@ -21,8 +21,8 @@ export const feedApi=createApi({
     tagTypes:['Feed'],
     endpoints:(builder)=>({
         feed: builder.query<output[],void>({
-            query:()=>({
-                url:"/feed",
+            query:(page)=>({
+                url:`/feed/${page}`,
                 
             }),
             providesTags:['Feed']

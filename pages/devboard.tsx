@@ -20,12 +20,16 @@ import { Blob } from 'buffer';
 import { useUsernameQuery } from '@/features/Register';
 import Namelist from './components/Namelist';
 import UseDebounce from './components/UseDebounce';
+import { useDispatch, useSelector } from 'react-redux';
+import { addinput, setinput } from '@/features/Input';
 
 export default function devboard() {
-
+const {input}=useSelector((state:any)=>state.input)
+console.log(input)
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [page,setpage]=useState<number>(0);
   
   const [prev,setprev]=useState<any>();
 
@@ -34,7 +38,7 @@ const [Addfeed]=usePostfeedMutation();
 
 const [gifdata,setgifdata]=useState<any[]>([]);
 // const [url,seturl]=useState<string>("");
-  const {data,isFetching,isSuccess,error}=useFeedQuery();
+  const {data,isFetching,isSuccess,error}=useFeedQuery(page as unknown as void);
   console.log(data);
 
 const gf=new GiphyFetch('7nhkFNFEATmyeEHpJ2AYMVy6rLSUxE6k')
@@ -77,7 +81,7 @@ if(file){
 }
 
 const feed={
-  text:inputfeed,
+  text:input,
   url:inputurl,
   img:filepath,
   love:0
@@ -85,10 +89,12 @@ const feed={
 await Addfeed(feed);
 setinputfeed("");
 }
+
 const [fetchname,setfetchname]=useState(false);
+const dispatch=useDispatch();
 const handleattherate=(e: { preventDefault: () => void; })=>{
 e.preventDefault();
-setinputfeed(inputfeed+"@");
+dispatch(addinput("@"));
 setfetchname(true);
 }
 console.log(file);
@@ -113,8 +119,7 @@ return ()=>{
 }
 },[file]) 
 
-  const debouncevalue=UseDebounce(inputfeed.substring(inputfeed.indexOf('@')+1),500)
-
+  const debouncevalue=UseDebounce(input.substring(input.indexOf('@')+1),500)
 
   return (
     <div className={styles.alldev}>
@@ -132,7 +137,10 @@ return ()=>{
               <div className={styles.inputcover}>
 
             <div className={styles.inputbox}>
-              <input type="text" className={styles.search} value={inputfeed} onChange={(e)=>setinputfeed(e.target.value)}/>
+              <input type="text" className={styles.search} value={input} 
+             onChange={(e)=>dispatch(setinput(e.target.value))}
+            //  onChange={(e)=>setinputfeed(e.target.value)}
+              />
               <div className={styles.icons}>
                 <div className={styles.lefticon}>
 <div className={styles.imgupload}>
