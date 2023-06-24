@@ -1,11 +1,23 @@
 .own{
     align-self: end;
-    border: 1px solid red;
+   
     width: 30%;
-}
+       
+      border-radius: 1.125rem 1.125rem 0rem  1.125rem;
+      background-color: rgb(156, 156, 250);
+      color: white;
+      padding: 10px 10px;
+    margin-right: 5px;
+    }
+    
+
 .notown{
   align-self: start;
-  border: 1px solid red;
+margin-left: 5px;
   width: 30%;
+  border-radius: 1.125rem 1.125rem 1.125rem  0rem;
+  background-color: rgb(156, 156, 250);
+  color: white;
+  padding: 10px 10px;
 
 }

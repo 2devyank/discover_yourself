@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import styles from "../styles/message.module.css"
 import { useConverseQuery } from '@/features/Converse'
 import Meslist from './components/Meslist'
-import { useMessageQuery,usePostmessageMutation } from '@/features/Message'
+import { useLazyMessageQuery, useMessageQuery,usePostmessageMutation } from '@/features/Message'
 import Messenger from './components/Messenger'
 import { Socket, io } from 'socket.io-client'
 import { DefaultEventsMap } from '@socket.io/component-emitter'
@@ -42,8 +42,9 @@ export default function messages() {
     hello: () => void;
   }
   
-  const {data:mdata,isSuccess:misSuccess}=useMessageQuery(currentchat?.con_id as unknown as void);
-  
+  // const {data:mdata,isSuccess:misSuccess}=useMessageQuery(currentchat?.con_id as unknown as void);
+  const [getmessage,results]=useLazyMessageQuery();
+
   // console.log(mdata)
   // const socket: Socket<ServerToClientEvents, ClientToServerEvents>=useRef();
   // socket.current=io('http://localhost:8080')
@@ -72,11 +73,11 @@ export default function messages() {
 //       console.log("room"+room);
 // socket.current?.emit("private_room",room);
 
-      setarrivalmessages({
-        text:'',
-        sender:'',
-    con_id:-1,
-      })
+    //   setarrivalmessages({
+    //     text:'',
+    //     sender:'',
+    // con_id:-1,
+    //   })
      
     }
 
@@ -109,7 +110,7 @@ setnewmessage("")
 
 useEffect(()=>{
 viewref.current?.scrollIntoView({behavior:"smooth"})
-},[mdata,message])
+},[results.data,message])
 
 useEffect(()=>{
 socket.current?.emit("addUser",id)
@@ -142,18 +143,22 @@ console.log(currentchat?.members.includes(arrivalmessage?.sender as string))
 useEffect(()=>{
   arrivalmessage && currentchat?.members.some((val)=>val===num) &&
   setmessages(prev=>[...prev,arrivalmessage]);
-//   setarrivalmessages({
-//     text:'',
-//     sender:'',
-// con_id:-1,
-//   })
-  return ()=>setmessages([{
-    text:'',
-        sender:'',
-    con_id:-1,
-  }]);
-},[arrivalmessage,currentchat])
+
+},[arrivalmessage])
 console.log(message);
+
+useEffect(()=>{
+  getmessage(currentchat?.con_id as unknown as void)
+setmessages(
+  [
+   { text:'',
+   sender:'',
+    con_id:-1,
+  }
+  ]
+)
+},[currentchat])
+
   return (
     <div className={styles.allmes}>
      {
@@ -161,7 +166,7 @@ console.log(message);
         <div className={styles.leftmes}>
           {
             data?.map((data,i)=>(
-              <div onClick={()=>handlepersonClick(data)}>
+              <div className={styles.leftsec} onClick={()=>handlepersonClick(data)}>
               <Meslist data={data} currentuser={id}/>
               </div>
               ))
@@ -169,21 +174,29 @@ console.log(message);
         </div> 
             }
             {
-              misSuccess &&
+              results.isSuccess &&
               <div className={styles.coverright}>
 
         <div className={styles.rightmes}>
         {
-            mdata?.map((mdata)=>(
+            results.data?.map((mdata)=>(
               <div ref={viewref} className={styles.innerright}>
               <Messenger mesdata={mdata} own={mdata?.sender==id }/>
+              
           </div>
               ))
             }
           {
             message?.map((mdata)=>(
               <div ref={viewref} className={styles.innerright}>
-              <Messenger mesdata={mdata} own={mdata?.sender===id }/>
+                {
+                    mdata.text && mdata.text?.length>0?(
+
+                      <Messenger mesdata={mdata} own={mdata?.sender===id }/>
+                      ):(
+null
+                      )
+                }
           </div>
               ))
             }
@@ -192,11 +205,12 @@ console.log(message);
 <textarea 
 name="" id="" 
 cols={25} 
-rows={5} 
+rows={3} 
 value={newmessage}
+className={styles.sendbox}
 onChange={(e)=>setnewmessage(e.target.value)}
 ></textarea>
-<button onClick={submitmessage}>Send</button>
+<button onClick={submitmessage} className={styles.send}>Send</button>
         </div>
             </div>
         }

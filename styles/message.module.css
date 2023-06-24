@@ -1,9 +1,9 @@
 .leftmes{
-    width: 40%;
+    width: 30%;
     border: 1px solid red;
 }
 .coverright{
-    width: 60%;
+    width: 70%;
     height: 86vh;
     border: 1px solid red;
 }
@@ -20,6 +20,12 @@
     flex-direction: column
 
 }
+.leftsec{
+    border :1px solid red;
+    padding: 20px 20px;
+    font-size: 24px;
+    background-color: rgb(221, 221, 240);
+}
 .inupright{
     display: flex;
     flex-direction: column
@@ -31,5 +37,32 @@
 }
 .sendmes{
     display: flex;
-    align-items: first baseline;
+    /* align-items: first baseline; */
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    /* border: 10px solid green; */
+    height: 18%;
+}
+.sendbox{
+width: 60%;
+border-radius: 3rem;
+background-color: rgb(229, 229, 240);
+padding: 20px 20px;
+border: none;
+align-self: center;
+}
+.send{
+    border-radius: 3rem;
+    background-color: rgb(150, 186, 83);
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: none;
+    
+}
+.parentelement{
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
