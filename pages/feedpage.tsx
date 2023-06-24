@@ -10,7 +10,7 @@ export default function feedpage() {
   const [comment,setcomment]=useState<string>("");
   const router=useRouter();
   const id=router.query.id;
-  
+  console.log(id);
   const {data,isLoading,error}=useGetfeedbyidQuery(id as unknown as void );
  
   const [addcomment,results]=useUpdatefeedMutation();
@@ -48,8 +48,8 @@ if(isLoading){
           }
           <div>
             {
-              data?.comments && data?.comments.map((da)=>(
-                <div className={styles.comments}>
+              data?.comments && data?.comments.map((da,i)=>(
+                <div key={i} className={styles.comments}>
                   <span>{da}</span>
                 </div>
               ))

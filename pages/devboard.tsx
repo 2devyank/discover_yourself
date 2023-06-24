@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styles from "../styles/dev.module.css"
 import { v4 as uuidv4 } from "uuid";
-import { useFeedQuery, usePostfeedMutation } from '@/features/Feed'
+import { useFeedQuery, useLazyFeedQuery, usePostfeedMutation } from '@/features/Feed'
 import ImageIcon from '@mui/icons-material/Image';
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import { Grid } from '@giphy/react-components';
@@ -22,7 +22,16 @@ import Namelist from './components/Namelist';
 import UseDebounce from './components/UseDebounce';
 import { useDispatch, useSelector } from 'react-redux';
 import { addinput, setinput } from '@/features/Input';
-
+interface output{
+  text:string,
+  url:string,
+  img:string,
+  name:string,
+  expertise:string,
+  love:number,
+  comments:string[],
+  id:number,
+}
 export default function devboard() {
 const {input}=useSelector((state:any)=>state.input)
 console.log(input)
@@ -30,6 +39,7 @@ console.log(input)
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [page,setpage]=useState<number>(0);
+  const [udata,setudata]=useState<output[]>([]);
   
   const [prev,setprev]=useState<any>();
 
@@ -38,9 +48,23 @@ const [Addfeed]=usePostfeedMutation();
 
 const [gifdata,setgifdata]=useState<any[]>([]);
 // const [url,seturl]=useState<string>("");
-  const {data,isFetching,isSuccess,error}=useFeedQuery(page as unknown as void);
-  console.log(data);
+  // const {data,isFetching,isSuccess,error}=useFeedQuery(page as unknown as void);
+  const [getfeed,results]=useLazyFeedQuery();
+  // console.log(data);
+  useEffect(()=>{
+    getfeed(page as unknown as void)
+    setpage(page+1);
+  },[])
+  const fetchedfeed=async()=>{
+    const feeds=await getfeed(page as unknown as void).unwrap();
+    console.log(feeds);
+    setudata(feeds);
+  }
+  useEffect(()=>{
 
+    fetchedfeed();
+  },[])
+// console.log(page)
 const gf=new GiphyFetch('7nhkFNFEATmyeEHpJ2AYMVy6rLSUxE6k')
 // const searchTerm=useRef<HTMLInputElement>(null);
 const [searchTerm,setsearchterm]=useState<string>("")
@@ -121,6 +145,31 @@ return ()=>{
 
   const debouncevalue=UseDebounce(input.substring(input.indexOf('@')+1),500)
 
+const handlescroll=async()=>{
+
+  const data=await getfeed(page as unknown as void).unwrap()
+  setpage(page+1);
+  setudata(prev=>[...prev,...data])
+// udata.concat(data)
+}
+console.log(udata);
+
+
+// useEffect(()=>{
+//   console.log('entering')
+// window.addEventListener('scroll',handlescroll)
+// return window.removeEventListener('scroll',handlescroll)
+// },[results.isLoading])
+// useEffect(()=>{
+
+  typeof window !== 'undefined' ?window.onscroll = function(ev) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      handlescroll();
+    }
+  }:null
+  
+// },[])
+// console.log(results.data);
   return (
     <div className={styles.alldev}>
         <div className={styles.allboard}>
@@ -209,7 +258,7 @@ return ()=>{
               </div>
               <div>
 {
-  data?.map((feeddata,i)=>(
+udata?.map((feeddata,i)=>(
 <Feedcard id={feeddata.id} text={feeddata.text} love={feeddata.love} comments={feeddata.comments} key={i} url={feeddata.url} img={feeddata.img} name={feeddata.name} exp={feeddata.expertise}/>
   ))
 }

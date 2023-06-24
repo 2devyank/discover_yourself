@@ -22,7 +22,7 @@ export const feedApi=createApi({
     endpoints:(builder)=>({
         feed: builder.query<output[],void>({
             query:(page)=>({
-                url:`/feed/${page}`,
+                url:`/feeder/${page}`,
                 
             }),
             providesTags:['Feed']
@@ -67,4 +67,4 @@ invalidatesTags:['Feed']
 
 })
 
-export const {useGetfeedbyidQuery,useFeedQuery,usePostfeedMutation,useDeletefeedMutation,useUpdatefeedMutation}=feedApi;
+export const {useLazyFeedQuery,useGetfeedbyidQuery,useFeedQuery,usePostfeedMutation,useDeletefeedMutation,useUpdatefeedMutation}=feedApi;
