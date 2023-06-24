@@ -148,8 +148,8 @@ return ()=>{
 const handlescroll=async()=>{
 
   const data=await getfeed(page as unknown as void).unwrap()
-  setpage(page+1);
   setudata(prev=>[...prev,...data])
+  // setpage(page+1);
 // udata.concat(data)
 }
 console.log(udata);
@@ -165,6 +165,7 @@ console.log(udata);
   typeof window !== 'undefined' ?window.onscroll = function(ev) {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
       handlescroll();
+      setpage(page+1);
     }
   }:null
   
