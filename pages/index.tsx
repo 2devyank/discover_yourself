@@ -6,12 +6,18 @@ import team from "../public/team.png"
 import up from "../public/up.jpg"
 import con from "../public/con.png"
 import { Button } from '@mui/material'
+import { useRouter } from 'next/router'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  
-
+  const router=useRouter();
+const handlegotoproject=()=>{
+router.push("/profile/edit/projects")
+}
+const gotohiretalent=()=>{
+  router.push("/hire")
+}
   return (
     <>
       <Head>
@@ -42,8 +48,8 @@ export default function Home() {
              An open platform to hire coders based on skills and Projects.</span>
               </div>
              <div className={styles.twobut}>
-              <Button variant='contained'>Add project</Button>
-              <Button variant='outlined'>Hire Talent</Button>
+              <Button variant='contained' onClick={handlegotoproject} >Add project</Button>
+              <Button variant='outlined' onClick={gotohiretalent}>Hire Talent</Button>
               </div>
             </div>
             <div className={styles.rightimage}>

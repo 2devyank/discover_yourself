@@ -280,7 +280,7 @@ autoComplete="off"
   
     
 <Button type='submit' className={styles.conren}>Submit</Button>
-<Button type='submit'>Edit</Button>
+<Button type='submit' >Edit</Button>
     
  
 
