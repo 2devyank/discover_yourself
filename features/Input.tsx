@@ -18,9 +18,12 @@ const inputslice=createSlice({
         },
         replaceinput:(state,{payload})=>{
             state.input=state.input.replace(state.input.substring(state.input.indexOf('@')),payload)
+        },
+        setinputempty:(state,{payload})=>{
+            state.input=payload;
         }
     }
 })
 
 export default inputslice.reducer;
-export const {setinput,addinput,replaceinput} =inputslice.actions;
+export const {setinput,addinput,replaceinput,setinputempty} =inputslice.actions;
