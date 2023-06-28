@@ -3,12 +3,15 @@ import React, { useRef } from 'react'
 import styles from "../styles/Register.module.css"
 import Link from 'next/link'
 import { useLoginTaskMutation } from '@/features/Register'
-import { cookies } from 'next/dist/client/components/headers'
+
 import Cookies from 'universal-cookie'
 import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { setToken } from '@/features/user'
 
 export default function login() {
   const router=useRouter();
+  const dispatch=useDispatch();
 
   const cookies = new Cookies();
   const [addTask, { isSuccess }] = useLoginTaskMutation();
@@ -16,10 +19,7 @@ export default function login() {
   const emailref = useRef<HTMLInputElement>(null);
   const passwordref = useRef<HTMLInputElement>(null);
 
-  interface Root {
-    data: Data
-  }
-
+  
   interface Data {
     accesToken: string
   }
@@ -32,13 +32,11 @@ export default function login() {
     };
     console.log(task);
     const result = await addTask(task).unwrap();
-    // cookies.remove('token');
+    dispatch(setToken(result.accessToken))
     localStorage.setItem("token",result.accessToken);
-    console.log(result.accessToken);
-    console.log(isSuccess);
+   
 router.push("/profile/profile");
-    //  console.log(result.status);
-    // console.log(data.data.accesToken);
+   
 
   } 
   return (

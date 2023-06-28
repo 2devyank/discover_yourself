@@ -6,6 +6,7 @@ import { messageApi } from "./features/Message";
 import { converseApi } from "./features/Converse";
 import { feedApi } from "./features/Feed";
 import inputreducer from "./features/Input";
+import userreducer from "./features/user";
 
 
 export const store =configureStore({
@@ -17,6 +18,7 @@ export const store =configureStore({
         [converseApi.reducerPath]:converseApi.reducer,
         [feedApi.reducerPath]:feedApi.reducer,
         input:inputreducer,
+        user:userreducer
 
 
     },

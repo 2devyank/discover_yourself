@@ -1,12 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "../../styles/Header.module.css"
 import Link from 'next/link'
 // import try  from "../../public/try.png"
 import image from "../../public/try.png"
+import user from "../../public/user.png"
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+
+
+
 
 export default function Appbar() {
+
+ const {token}=useSelector((state:any)=>state.user)
+ console.log(token);
   const router=useRouter();
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
@@ -33,7 +43,7 @@ router.push("/")
             <Link href="/devboard" className={styles.rem} >Dev Board</Link>
           </li>
           <li className={styles.option} onClick={closeMobileMenu}>
-            <Link href="/messages" className={styles.rem}>Message</Link>
+            <Link href="/messages" className={styles.rem}>Chat</Link>
           </li>
           <li className={styles.option} onClick={closeMobileMenu}>
             <Link href="/profile/edit/projects" className={styles.probox}>
@@ -48,26 +58,45 @@ router.push("/")
         
        
       </div>
-      <ul className={styles.pop}>
+      <>
+      {
+        
+        token
+        ?(<ul className={styles.pop}>
         <li  onClick={closeMobileMenu}>
-          <Link href="/profile/profile" className={styles.rem}>Profile</Link>
+          <Link href="/profile/profile" className={styles.rem}>
+            <Image 
+            src={user}
+            alt="asdf"
+            width={35}
+            height={35}
+            />
+          </Link>
         </li>
        
-      </ul>
+      </ul>):
+      (
+        
+        <ul className={styles.pop}>
+          <li  onClick={closeMobileMenu}>
+            <Link href="/register" className={styles.rembox}>Get Started</Link>
+          </li>
+        
+        </ul>
+        )
+}
+        </>
      
       <div className={styles.mobilemenu} onClick={handleClick}>
         {click ? (
-          // <CloseMenu className="menu-icon" />
-<span className={styles.menuicon}>
-  cross
-</span>
+        
+<CloseIcon className={styles.menuicon}/>
+
         ) : (
           // <MenuIcon className="menu-icon" />
-          <span>
-<span className={styles.menuicon}>
-menu
-</span>
-</span>
+          
+<MenuIcon className={styles.menuicon}/>
+
         )}
       </div>
     </div>

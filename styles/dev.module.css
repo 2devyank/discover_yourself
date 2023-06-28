@@ -1,6 +1,6 @@
 .leftboard {
     width: 30%;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .alldev {
@@ -9,7 +9,7 @@
 
 .board {
     width: 70%;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .allboard {

@@ -4,6 +4,7 @@ import Image from 'next/image'
 import github from "../../public/github.png"
 import link from "../../public/linkedin.png"
 import skills from "../../public/creative-thinking.png"
+import hacker from "../../public/hacker.png"
 import { Button } from '@mui/material'
 import { usePostconverseMutation } from '@/features/Converse'
 import { useRouter } from 'next/router'
@@ -47,7 +48,13 @@ router.push(`tpage?id=${data?.id}`)
         <div className={styles.cardhead}>
           <div className={styles.leftcardhead}>
 
-            <div className={styles.imgcolor}></div>
+            {/* <div className={styles.imgcolor}></div> */}
+            <Image
+            src={hacker}
+            alt="pro"
+            width={100}
+            height={100}
+            />
 
             <div className={styles.cardcred}>
             <span className={styles.talentname}>{data.name}</span>
@@ -90,7 +97,7 @@ router.push(`tpage?id=${data?.id}`)
      
       <div className={styles.cardfoot}>
       <Button  variant="contained" onClick={gotoprofilepage}>View Profile</Button>
-      <div>
+      <div className={styles.space}>
 
       <Button  variant="contained">Share</Button>
       <Button  variant="contained" onClick={handlesendmessage} >Send Message</Button>
